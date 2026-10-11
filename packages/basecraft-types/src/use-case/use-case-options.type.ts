@@ -1,5 +1,5 @@
 import { DomainError } from "basecraft-errors";
-import { ObjectSchema } from "../schema/object-schema.type.js";
+import { ObjectShape } from "./object-shape.type.js";
 import { Result } from "./result.type.js";
 import { UseCaseDependencies } from "./use-case-dependencies.type.js";
 
@@ -13,7 +13,7 @@ export interface UseCaseOptions<
 
   allowedRoles?: readonly string[] | undefined;
 
-  requestSchema: ObjectSchema<Request>;
+  requestShape: ObjectShape<Request>;
 
   handler: (
     dependencies: Dependencies,

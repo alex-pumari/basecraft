@@ -9,7 +9,7 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
-    "typescript": "^7.0.2",
-    "basecraft-errors": "1.0.0"
+    "basecraft-errors": "1.0.0",
+    "typescript": "^7.0.2"
   }
 }

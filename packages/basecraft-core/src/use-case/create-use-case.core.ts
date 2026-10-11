@@ -1,5 +1,5 @@
 import {
-  ObjectSchema,
+  ObjectShape,
   Result,
   UseCase,
   UseCaseDependencies,
@@ -15,7 +15,7 @@ import {
 } from "basecraft-errors";
 import { createResult } from "./create-result.core.js";
 
-export declare function createValidator<Request extends object>(schema: ObjectSchema<Request>): { isValid: (request: Request) => boolean };
+export declare function createValidator<Request extends object>(schema: ObjectShape<Request>): { isValid: (request: Request) => boolean };
 
 export function createUseCase<
   Dependencies extends UseCaseDependencies,
@@ -30,7 +30,7 @@ export function createUseCase<
     CustomError
   >,
 ): UseCase<Dependencies, Request, Response, CustomError> {
-  const requestValidator = createValidator<Request>(options.requestSchema);
+  const requestValidator = createValidator<Request>(options.requestShape);
 
   const roleAuthorizationRequired = options.allowedRoles !== undefined;
   const authenticationRequired = options.authenticationRequired || roleAuthorizationRequired;
