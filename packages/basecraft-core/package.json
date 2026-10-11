@@ -1,6 +1,7 @@
 {
   "name": "basecraft-core",
   "version": "1.0.0",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -8,8 +9,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "basecraft-errors": "*",
-    "basecraft-types": "*"
+    "basecraft-errors": "1.0.0",
+    "basecraft-types": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^7.0.2"
