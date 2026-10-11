@@ -1,4 +1,4 @@
-import { DomainError } from "./domain.error";
+import { DomainError } from "./domain.error.js";
 
 export class UnexpectedError extends DomainError {
   readonly code = "UNEXPECTED_ERROR";

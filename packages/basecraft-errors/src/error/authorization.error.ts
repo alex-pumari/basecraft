@@ -1,4 +1,4 @@
-import { DomainError } from "./domain.error";
+import { DomainError } from "./domain.error.js";
 
 export class AuthorizationError extends DomainError {
   readonly code = "AUTHORIZATION_ERROR";
