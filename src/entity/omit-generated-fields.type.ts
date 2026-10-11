@@ -1,12 +1,12 @@
 import { Entity } from "./entity.type";
 
-export type OmitGeneratedFields<EntityType extends Entity<EntityType["id"]>> =
+export type OmitGeneratedFields<CustomEntity extends Entity<CustomEntity["id"]>> =
   {
-    [Field in keyof EntityType as
-      undefined extends EntityType[Field] ? never : Field
-    ]: EntityType[Field];
+    [Field in keyof CustomEntity as
+      undefined extends CustomEntity[Field] ? never : Field
+    ]: CustomEntity[Field];
   } & {
-    [Field in keyof EntityType as
-      undefined extends EntityType[Field] ? Field : never
+    [Field in keyof CustomEntity as
+      undefined extends CustomEntity[Field] ? Field : never
     ]?: never;
   };

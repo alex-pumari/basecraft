@@ -4,16 +4,16 @@ import { Sort } from "../query/sort.type";
 import { PageResult } from "./page-result.type";
 
 export interface PaginatedReadRepository<
-  EntityType extends Entity<EntityType["id"]>,
+  CustomEntity extends Entity<CustomEntity["id"]>,
   FindQuery,
   SortableField extends string
 > {
-  findById(id: EntityType["id"]): Promise<EntityType | null>;
+  findById(id: CustomEntity["id"]): Promise<CustomEntity | null>;
 
   findMany(
     query: FindQuery & {
       pagination?: Pagination;
       sort?: Sort<SortableField> | Sort<SortableField>[];
     }
-  ): Promise<PageResult<EntityType>>;
+  ): Promise<PageResult<CustomEntity>>;
 }

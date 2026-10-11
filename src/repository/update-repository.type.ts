@@ -1,7 +1,7 @@
 import { Entity } from "../entity/entity.type";
 
-export interface UpdateRepository<Identifier, Input, EntityType extends Entity<EntityType["id"]>> {
-  update(id: Identifier, input: Input): Promise<EntityType>;
+export interface UpdateRepository<Identifier, Input> {
+  update(id: Identifier, input: Input): Promise<void>;
 }
 
 export interface BulkUpdateRepository<Identifier, Input> {

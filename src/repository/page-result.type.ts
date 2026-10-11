@@ -1,7 +1,7 @@
 import { Entity } from "../entity/entity.type";
 
-export interface PageResult<EntityType extends Entity<EntityType["id"]>> {
-  items: EntityType[];
+export interface PageResult<CustomEntity extends Entity<CustomEntity["id"]>> {
+  items: CustomEntity[];
   page: number;
   limit: number;
   totalItems: number;

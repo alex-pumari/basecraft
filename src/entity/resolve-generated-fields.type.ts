@@ -1,5 +1,5 @@
 import { Entity } from "./entity.type";
 
-export type ResolveGeneratedFields<EntityType extends Entity<EntityType["id"]>> = {
-  [Field in keyof EntityType]-?: Exclude<EntityType[Field], undefined>;
+export type ResolveGeneratedFields<CustomEntity extends Entity<CustomEntity["id"]>> = {
+  [Field in keyof CustomEntity]-?: Exclude<CustomEntity[Field], undefined>;
 };
