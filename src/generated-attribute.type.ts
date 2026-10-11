@@ -1,1 +1,0 @@
-export type GeneratedAttribute<Value> = Value | undefined;

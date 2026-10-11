@@ -1,0 +1,1 @@
+export type GeneratedField<Value> = Value | undefined;

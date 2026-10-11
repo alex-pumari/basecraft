@@ -1,6 +1,6 @@
 export type Entity<
-  Identifier,
-  IdentifierKey extends string = "id"
+  IdentifierValue,
+  IdentifierField extends string = "id"
 > = {
-  [key in IdentifierKey]: Identifier;
+  [Field in IdentifierField]: IdentifierValue;
 };

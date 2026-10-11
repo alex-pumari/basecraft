@@ -1,9 +1,9 @@
 import { Entity } from "./entity.type";
 
 export type TimestampedEntity<
-  Identifier,
-  IdentifierKey extends string = "id"
-> = Entity<Identifier, IdentifierKey> & {
+  IdentifierValue,
+  IdentifierField extends string = "id"
+> = Entity<IdentifierValue, IdentifierField> & {
   createdAt: Date;
   updatedAt: Date;
 };
