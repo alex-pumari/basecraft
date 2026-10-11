@@ -1,4 +1,4 @@
-import { Entity } from "./entity.type";
+import { Entity } from "./entity.type.js";
 
 export type OmitGeneratedFields<CustomEntity extends Entity<CustomEntity["id"]>> =
   {

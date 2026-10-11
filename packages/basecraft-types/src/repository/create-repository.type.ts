@@ -1,4 +1,4 @@
-import { Entity } from "../entity/entity.type";
+import { Entity } from "../entity/entity.type.js";
 
 export interface CreateRepository<CustomEntity extends Entity<CustomEntity["id"]>, Input> {
   create(input: Input): Promise<CustomEntity>;

@@ -1,13 +1,15 @@
 {
   "name": "basecraft-types",
   "version": "1.0.0",
+  "type": "module",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "basecraft-errors": "1.0.0"
   }
 }

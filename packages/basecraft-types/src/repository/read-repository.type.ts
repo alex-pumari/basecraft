@@ -1,4 +1,4 @@
-import { Entity } from "../entity/entity.type";
+import { Entity } from "../entity/entity.type.js";
 
 export interface ReadRepository<CustomEntity extends Entity<CustomEntity["id"]>> {
   findById(id: CustomEntity["id"]): Promise<CustomEntity | null>;

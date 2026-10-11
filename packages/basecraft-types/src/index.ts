@@ -1,7 +1,7 @@
-export * from "./entity/index";
-export * from "./query/index";
-export * from "./repository/index";
-export * from "./schema/index";
-export * from "./use-case/index";
+export * from "./entity/index.js";
+export * from "./query/index.js";
+export * from "./repository/index.js";
+export * from "./schema/index.js";
+export * from "./use-case/index.js";
 
-export * from "./require-at-least-one.type";
+export * from "./require-at-least-one.type.js";

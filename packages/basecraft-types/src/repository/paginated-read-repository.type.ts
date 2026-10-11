@@ -1,7 +1,7 @@
-import { Entity } from "../entity/entity.type";
-import { Pagination } from "../query/pagination.type";
-import { Sort } from "../query/sort.type";
-import { PageResult } from "./page-result.type";
+import { Entity } from "../entity/entity.type.js";
+import { Pagination } from "../query/pagination.type.js";
+import { Sort } from "../query/sort.type.js";
+import { PageResult } from "./page-result.type.js";
 
 export interface PaginatedReadRepository<
   CustomEntity extends Entity<CustomEntity["id"]>,

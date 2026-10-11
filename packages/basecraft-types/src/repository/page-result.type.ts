@@ -1,4 +1,4 @@
-import { Entity } from "../entity/entity.type";
+import { Entity } from "../entity/entity.type.js";
 
 export interface PageResult<CustomEntity extends Entity<CustomEntity["id"]>> {
   items: CustomEntity[];

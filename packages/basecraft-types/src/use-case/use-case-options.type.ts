@@ -1,7 +1,7 @@
-import { DomainError } from "../../packages/basecraft-errors/src/error/domain.error";
-import { ObjectSchema } from "../schema/object-schema.type";
-import { Result } from "./result.type";
-import { UseCaseDependencies } from "./use-case-dependencies.type";
+import { DomainError } from "basecraft-errors";
+import { ObjectSchema } from "../schema/object-schema.type.js";
+import { Result } from "./result.type.js";
+import { UseCaseDependencies } from "./use-case-dependencies.type.js";
 
 export interface UseCaseOptions<
   Dependencies extends UseCaseDependencies,

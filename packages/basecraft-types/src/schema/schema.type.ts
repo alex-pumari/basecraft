@@ -1,8 +1,8 @@
-import { StringSchema } from "./string-schema.type";
-import { ArraySchema } from "./array-schema.type";
-import { BooleanSchema } from "./boolean-schema.type";
-import { NumberSchema } from "./number-schema.type";
-import { ObjectSchema } from "./object-schema.type";
+import { StringSchema } from "./string-schema.type.js";
+import { ArraySchema } from "./array-schema.type.js";
+import { BooleanSchema } from "./boolean-schema.type.js";
+import { NumberSchema } from "./number-schema.type.js";
+import { ObjectSchema } from "./object-schema.type.js";
 
 export type Schema<Type> =
   Type extends number ? NumberSchema :

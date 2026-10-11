@@ -1,5 +1,3 @@
-import { Entity } from "../entity/entity.type";
-
 export interface UpdateRepository<Identifier, Input> {
   update(id: Identifier, input: Input): Promise<void>;
 }
