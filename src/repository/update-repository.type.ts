@@ -1,4 +1,4 @@
-import { Entity } from "../entity.type";
+import { Entity } from "../entity/entity.type";
 
 export interface UpdateRepository<Identifier, Input, EntityType extends Entity<EntityType["id"]>> {
   update(id: Identifier, input: Input): Promise<EntityType>;

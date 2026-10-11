@@ -1,4 +1,4 @@
-import { Entity } from "../entity.type";
+import { Entity } from "../entity/entity.type";
 import { Pagination } from "../query/pagination.type";
 import { Sort } from "../query/sort.type";
 import { PageResult } from "./page-result.type";
