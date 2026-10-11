@@ -1,9 +1,9 @@
-import { Result } from "../../../basecraft-types/src/use-case/result.type";
+import { SuccessResult, ErrorResult } from "basecraft-types";
 
 export const createResult = {
   success<Value>(
     value: Value
-  ): Result<Value, never> {
+  ): SuccessResult<Value> {
     return {
       success: true,
       value,
@@ -12,7 +12,7 @@ export const createResult = {
 
   failure<CustomError extends Error>(
     error: CustomError,
-  ): Result<never, CustomError> {
+  ): ErrorResult<CustomError> {
     return {
       success: false,
       error,
