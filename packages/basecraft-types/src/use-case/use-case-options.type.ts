@@ -1,4 +1,4 @@
-import { DomainError } from "../helpers/error/domain.error";
+import { DomainError } from "../../packages/basecraft-errors/src/error/domain.error";
 import { ObjectSchema } from "../schema/object-schema.type";
 import { Result } from "./result.type";
 import { UseCaseDependencies } from "./use-case-dependencies.type";

@@ -1,4 +1,4 @@
-import { DomainError } from "../helpers/error/domain.error";
+import { DomainError } from "../../packages/basecraft-errors/src/error/domain.error";
 import { Result } from "./result.type";
 import { UseCaseDependencies } from "./use-case-dependencies.type";
 import { UseCaseError } from "./use-case-error.type";
