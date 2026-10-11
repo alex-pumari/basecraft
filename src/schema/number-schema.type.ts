@@ -1,4 +1,5 @@
 export interface NumberSchema {
+  readonly _brand: "NUMBER";
   integer(): NumberSchema;
   decimal(): NumberSchema;
   positive(): NumberSchema;
