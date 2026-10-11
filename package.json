@@ -1,16 +1,14 @@
 {
   "name": "basecraft",
-  "version": "1.0.0",
-  "description": "Types to basecraft",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "build": "npm run build --ws",
+    "clean": "npm run clean --ws"
   }
 }
