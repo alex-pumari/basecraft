@@ -1,6 +1,5 @@
-export type Entity<
-  IdentifierValue,
-  IdentifierField extends string = "id"
-> = {
+export type IdentifierField = "id"; 
+
+export type Entity<IdentifierValue> = {
   [Field in IdentifierField]: IdentifierValue;
 };

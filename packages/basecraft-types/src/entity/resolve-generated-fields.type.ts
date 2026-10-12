@@ -1,5 +1,5 @@
-import { Entity } from "./entity.type.js";
+import { Entity, IdentifierField } from "./entity.type.js";
 
-export type ResolveGeneratedFields<CustomEntity extends Entity<CustomEntity["id"]>> = {
+export type ResolveGeneratedFields<CustomEntity extends Entity<CustomEntity[IdentifierField]>> = {
   [Field in keyof CustomEntity]-?: Exclude<CustomEntity[Field], undefined>;
 };

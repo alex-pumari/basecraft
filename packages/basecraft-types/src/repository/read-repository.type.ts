@@ -1,7 +1,7 @@
-import { Entity } from "../entity/entity.type.js";
+import { Entity, IdentifierField } from "../entity/entity.type.js";
 
-export interface ReadRepository<CustomEntity extends Entity<CustomEntity["id"]>> {
-  findById(id: CustomEntity["id"]): Promise<CustomEntity | null>;
+export interface ReadRepository<CustomEntity extends Entity<CustomEntity[IdentifierField]>> {
+  findById(id: CustomEntity[IdentifierField]): Promise<CustomEntity | null>;
 
   findAll(): Promise<CustomEntity[]>;
 }

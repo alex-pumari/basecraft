@@ -1,14 +1,14 @@
-import { Entity } from "../entity/entity.type.js";
+import { Entity, IdentifierField } from "../entity/entity.type.js";
 import { Pagination } from "../query/pagination.type.js";
 import { Sort } from "../query/sort.type.js";
 import { PageResult } from "./page-result.type.js";
 
 export interface PaginatedReadRepository<
-  CustomEntity extends Entity<CustomEntity["id"]>,
+  CustomEntity extends Entity<CustomEntity[IdentifierField]>,
   FindQuery,
   SortableField extends string
 > {
-  findById(id: CustomEntity["id"]): Promise<CustomEntity | null>;
+  findById(id: CustomEntity[IdentifierField]): Promise<CustomEntity | null>;
 
   findMany(
     query: FindQuery & {
