@@ -1,7 +1,5 @@
-import { Schema } from "./schema.type.js";
+import type { BaseSchema } from "./base-schema.type.js";
+import type { Shape } from "./shape.type.js";
 
-export type ObjectSchema<ObjectType extends object> = {
-  readonly _brand: "OBJECT";
-} & {
-  [Key in keyof ObjectType]: Schema<ObjectType[Key]>;
-};
+export type ObjectSchema<ObjectType extends object> =
+  BaseSchema<ObjectType> & Shape<ObjectType>;

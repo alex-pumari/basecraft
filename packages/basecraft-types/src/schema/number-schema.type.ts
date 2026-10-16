@@ -1,5 +1,6 @@
-export interface NumberSchema {
-  readonly _brand: "NUMBER";
+import { BaseSchema } from "./base-schema.type.js";
+
+export interface NumberSchema extends BaseSchema<number> {
   integer(): NumberSchema;
   decimal(): NumberSchema;
   positive(): NumberSchema;
