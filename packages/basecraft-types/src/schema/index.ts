@@ -4,6 +4,7 @@ export * from "./infer-shape.type.js";
 export * from "./infer-schema.type.js";
 export * from "./number-schema.type.js";
 export * from "./object-schema.type.js";
+export * from "./base-schema.type.js";
 export * from "./schema.type.js";
 export * from "./shape.type.js";
 export * from "./string-schema.type.js";
