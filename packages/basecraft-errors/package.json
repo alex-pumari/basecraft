@@ -6,7 +6,9 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "check:types": "tsc --noEmit",
+    "check:code": "eslint ."
   },
   "devDependencies": {
     "typescript": "^7.0.2"

@@ -9,6 +9,9 @@
   },
   "scripts": {
     "build": "npm run build --ws",
-    "clean": "npm run clean --ws"
+    "clean": "npm run clean --ws",
+    "test": "npm run test --ws --if-present",
+    "check:types": "npm run check:types --ws",
+    "check:code": "npm run check:code --ws"
   }
 }
