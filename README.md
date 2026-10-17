@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./basecraft-logo.jpg" alt="Basecraft" width="160" />
+  <img src="./basecraft-logo.jpg" alt="Basecraft" width="100%" />
 </p>
 
 <h1 align="center">Basecraft</h1>
