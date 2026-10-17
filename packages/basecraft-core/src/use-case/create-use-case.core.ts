@@ -12,7 +12,6 @@ import {
   InvalidRequestError,
   UnexpectedError
 } from "basecraft-errors";
-import { createResult } from "./create-result.core.js";
 import { createValidator } from "./create-validator.core.js";
 
 export function createUseCase<
@@ -41,20 +40,20 @@ export function createUseCase<
       const isRequestValid = requestValidator.isValid(request);
 
       if (!isRequestValid) {
-        return createResult.failure(new InvalidRequestError());
+        return new InvalidRequestError();
       }
 
       const { currentUser } = dependencies;
 
       if (authenticationRequired && !currentUser) {
-        return createResult.failure(new AuthenticationRequiredError());
+        return new AuthenticationRequiredError();
       }
 
       if (
         roleAuthorizationRequired &&
         !options.allowedRoles!.includes(currentUser!.role)
       ) {
-        return createResult.failure(new AuthorizationError());
+        return new AuthorizationError();
       }
 
       try {
@@ -62,10 +61,10 @@ export function createUseCase<
       } catch (error: unknown) {
 
         if (error instanceof DomainError) {
-          return createResult.failure(error as UseCaseError<CustomError>);
+          return error as UseCaseError<CustomError>;
         }
 
-        return createResult.failure(new UnexpectedError());
+        return new UnexpectedError();
       }
     },
   };

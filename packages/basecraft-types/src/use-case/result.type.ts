@@ -1,13 +1,3 @@
-export interface SuccessResult<Value> {
-  success: true;
-  value: Value;
-}
+import { DomainError } from "basecraft-errors";
 
-export interface ErrorResult<CustomError extends Error> {
-  success: false;
-  error: CustomError;
-}
-
-export type Result<Data, CustomError extends Error> =
-  | SuccessResult<Data>
-  | ErrorResult<CustomError>;
+export type Result<Value, CustomError extends DomainError> = Value | CustomError;
