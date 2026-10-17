@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { array } from "./array.core.js";
-import { string } from "../string.core.js";
+import { string } from "../string/string.core.js";
 import { number } from "../number.core.js";
 import { boolean } from "../boolean.core.js";
 

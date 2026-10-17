@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { string } from "../string.core.js";
+import { string } from "../string/string.core.js";
 import { array } from "./array.core.js";
 import { number } from "../number.core.js";
 import { object } from "../object.core.js";
