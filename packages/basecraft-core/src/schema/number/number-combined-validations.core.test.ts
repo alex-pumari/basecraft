@@ -22,19 +22,39 @@ describe("number-combined-validations", () => {
     });
   });
 
-  describe("greater than and decimal", () => {
-    const validator = number().decimal().greaterThan(10).isValid;
+  describe("greater than and decimal places", () => {
+    const validator = number().decimalPlaces(2).greaterThan(10).isValid;
 
-    test("should accept decimals greater than the target", () => {
-      const validValues = [10.1, 10.5, 11.5, 12.75, 100.99];
+    test("should accept values greater than the target within the decimal places", () => {
+      const validValues = [10.1, 10.25, 11, 12.75, 100.99];
 
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
       });
     });
 
-    test("should reject values that are not greater than the target", () => {
-      const invalidValues = [10, 9.5, 0, NaN, Infinity];
+    test("should reject values that are not greater than the target or exceed the decimal places", () => {
+      const invalidValues = [10, 9.99, 0, 10.123, 11.001, NaN, Infinity];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("less than and decimal places", () => {
+    const validator = number().decimalPlaces(2).lessThan(10).isValid;
+
+    test("should accept values less than the target within the decimal places", () => {
+      const validValues = [-10.5, -1.5, 0.5, 1.75, 9.99, 9];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject values that are not less than the target or exceed the decimal places", () => {
+      const invalidValues = [10, 10.1, 11, 9.999, -1.123, NaN, -Infinity];
 
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);
@@ -62,25 +82,6 @@ describe("number-combined-validations", () => {
     });
   });
 
-  describe("less than and decimal", () => {
-    const validator = number().decimal().lessThan(10).isValid;
-
-    test("should accept decimals less than the target", () => {
-      const validValues = [-10.5, -1.5, 0.5, 1.75, 9.99, 9];
-
-      validValues.forEach((value) => {
-        expect(validator(value)).toBe(true);
-      });
-    });
-
-    test("should reject values that are not less than the target", () => {
-      const invalidValues = [10, 10.1, 11, 11.5, NaN, -Infinity];
-
-      invalidValues.forEach((value) => {
-        expect(validator(value)).toBe(false);
-      });
-    });
-  });
 
   describe("negative and integer", () => {
     const validator = number().integer().negative().isValid;
@@ -102,20 +103,21 @@ describe("number-combined-validations", () => {
     });
   });
 
-  describe("negative and decimal", () => {
-    const validator = number().decimal().negative().isValid;
-  
-    test("should accept negative decimals", () => {
-      const validValues = [-0.1, -1.5, -3.14, -10.25];
-  
+
+  describe("negative and decimal places", () => {
+    const validator = number().decimalPlaces(2).negative().isValid;
+
+    test("should accept negative values within the decimal places", () => {
+      const validValues = [-0.1, -1, -3.14, -10.25];
+
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
       });
     });
-  
-    test("should reject values that are not negative decimals", () => {
-      const invalidValues = [0.1, 1.5, 0, 1, -1, NaN, -Infinity];
-  
+
+    test("should reject values that are not negative or exceed the decimal places", () => {
+      const invalidValues = [0.1, 0, 1, -3.141, -0.001, NaN, -Infinity];
+
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);
       });
@@ -142,20 +144,20 @@ describe("number-combined-validations", () => {
     });
   });
 
-  describe("positive and decimal", () => {
-    const validator = number().decimal().positive().isValid;
-  
-    test("should accept positive decimals", () => {
-      const validValues = [0.1, 1.5, 3.14, 10.25];
-  
+  describe("positive and decimal places", () => {
+    const validator = number().decimalPlaces(2).positive().isValid;
+
+    test("should accept positive values within the decimal places", () => {
+      const validValues = [0.1, 1, 3.14, 10.25];
+
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
       });
     });
-  
-    test("should reject values that are not positive decimals", () => {
-      const invalidValues = [-0.1, -1.5, 0, 1, -1, NaN, Infinity];
-  
+
+    test("should reject values that are not positive or exceed the decimal places", () => {
+      const invalidValues = [-0.1, 0, -1, 3.141, 0.001, NaN, Infinity];
+
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);
       });
