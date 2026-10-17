@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { array } from "./array.core.js";
 import { string } from "../string/string.core.js";
 import { number } from "../number.core.js";
-import { boolean } from "../boolean.core.js";
+import { boolean } from "../boolean/boolean.core.js";
 
 describe("array-contains-validations", () => {
   test("should accept arrays containing the specified number", () => {
