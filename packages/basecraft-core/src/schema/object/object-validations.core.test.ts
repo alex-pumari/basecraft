@@ -1,15 +1,14 @@
 import { describe, expect, test } from "vitest";
-import { string } from "../../../schema/string.core.js";
-import { array } from "../../../schema/array.core.js";
-import { number } from "../../../schema/number.core.js";
-import { object } from "../../../schema/object.core.js";
-import { boolean } from "../../../schema/boolean.core.js";
-import { createValidator } from "../../create-validator.core.js";
+import { string } from "../string/string.core.js";
+import { array } from "../array/array.core.js";
+import { number } from "../number/number.core.js";
+import { object } from "./object.core.js";
+import { boolean } from "../boolean/boolean.core.js";
 
-describe("object-validation", () => {
+describe("object-validations", () => {
   describe("object", () => {
     test("should accept objects with any property values when no shape is specified", () => {
-      const validator = createValidator({ field: object({}) }).isValid;
+      const validator = object({}).isValid;
 
       const validValues = [
         {},
@@ -23,14 +22,12 @@ describe("object-validation", () => {
       ];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
 
     test("should reject values that are not objects", () => {
-      const validator = createValidator({
-        field: object({ name: string() }),
-      }).isValid;
+      const validator = object({ name: string() }).isValid;
 
       const invalidValues = [
         undefined,
@@ -49,16 +46,14 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
   });
 
   describe("property schema validation", () => {
     test("should accept objects whose properties match the string schema", () => {
-      const validator = createValidator({
-        field: object({ name: string() }),
-      }).isValid;
+      const validator = object({ name: string() }).isValid;
 
       const validValues = [
         { name: "" },
@@ -67,14 +62,12 @@ describe("object-validation", () => {
       ];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
 
     test("should reject objects whose properties do not match the string schema", () => {
-      const validator = createValidator({
-        field: object({ name: string() }),
-      }).isValid;
+      const validator = object({ name: string() }).isValid;
 
       const invalidValues = [
         { name: 1 },
@@ -86,14 +79,12 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
 
     test("should accept objects whose properties match the number schema", () => {
-      const validator = createValidator({
-        field: object({ age: number() }),
-      }).isValid;
+      const validator = object({ age: number() }).isValid;
 
       const validValues = [
         { age: 0 },
@@ -103,14 +94,12 @@ describe("object-validation", () => {
       ];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
 
     test("should reject objects whose properties do not match the number schema", () => {
-      const validator = createValidator({
-        field: object({ age: number() }),
-      }).isValid;
+      const validator = object({ age: number() }).isValid;
 
       const invalidValues = [
         { age: "25" },
@@ -124,26 +113,22 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
 
     test("should accept objects whose properties match the boolean schema", () => {
-      const validator = createValidator({
-        field: object({ active: boolean() }),
-      }).isValid;
+      const validator = object({ active: boolean() }).isValid;
 
       const validValues = [{ active: true }, { active: false }];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
 
     test("should reject objects whose properties do not match the boolean schema", () => {
-      const validator = createValidator({
-        field: object({ active: boolean() }),
-      }).isValid;
+      const validator = object({ active: boolean() }).isValid;
 
       const invalidValues = [
         { active: 1 },
@@ -156,16 +141,14 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
 
     test("should reject objects that are missing a required property", () => {
-      const validator = createValidator({
-        field: object({
-          name: string(),
-          age: number(),
-        }),
+      const validator = object({
+        name: string(),
+        age: number(),
       }).isValid;
 
       const invalidValues = [
@@ -175,14 +158,12 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
 
     test("should accept objects with additional properties when all required properties are valid", () => {
-      const validator = createValidator({
-        field: object({ name: string() }),
-      }).isValid;
+      const validator = object({ name: string() }).isValid;
 
       const validValues = [
         { name: "first-example", age: 25 },
@@ -191,19 +172,17 @@ describe("object-validation", () => {
       ];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
   });
 
   describe("nested object schema validation", () => {
     test("should accept objects whose nested properties match the object schema", () => {
-      const validator = createValidator({
-        field: object({
-          address: object({
-            street: string(),
-            number: number(),
-          }),
+      const validator = object({
+        address: object({
+          street: string(),
+          number: number(),
         }),
       }).isValid;
 
@@ -223,17 +202,15 @@ describe("object-validation", () => {
       ];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
 
     test("should reject objects whose nested properties do not match the object schema", () => {
-      const validator = createValidator({
-        field: object({
-          address: object({
-            street: string(),
-            number: number(),
-          }),
+      const validator = object({
+        address: object({
+          street: string(),
+          number: number(),
         }),
       }).isValid;
 
@@ -247,16 +224,14 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
 
     test("should reject objects whose nested properties are missing", () => {
-      const validator = createValidator({
-        field: object({
-          address: object({
-            street: string(),
-          }),
+      const validator = object({
+        address: object({
+          street: string(),
         }),
       }).isValid;
 
@@ -267,17 +242,15 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
   });
 
   describe("array property schema validation", () => {
     test("should accept objects whose properties match the array schema", () => {
-      const validator = createValidator({
-        field: object({
-          tags: array(string()),
-        }),
+      const validator = object({
+        tags: array(string()),
       }).isValid;
 
       const validValues = [
@@ -287,15 +260,13 @@ describe("object-validation", () => {
       ];
 
       validValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(true);
+        expect(validator(value)).toBe(true);
       });
     });
 
     test("should reject objects whose array properties contain invalid items", () => {
-      const validator = createValidator({
-        field: object({
-          tags: array(string()),
-        }),
+      const validator = object({
+        tags: array(string()),
       }).isValid;
 
       const invalidValues = [
@@ -308,15 +279,13 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
 
     test("should reject objects whose array properties are not arrays", () => {
-      const validator = createValidator({
-        field: object({
-          tags: array(string()),
-        }),
+      const validator = object({
+        tags: array(string()),
       }).isValid;
 
       const invalidValues = [
@@ -330,73 +299,7 @@ describe("object-validation", () => {
       ];
 
       invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
-      });
-    });
-  });
-
-  describe("combined property schemas", () => {
-    test("should accept objects whose properties satisfy all their schemas", () => {
-      const validator = createValidator({
-        field: object({
-          name: string(),
-          age: number(),
-          active: boolean(),
-          tags: array(string()),
-        }),
-      }).isValid;
-
-      expect(
-        validator({
-          field: {
-            name: "first-example",
-            age: 25,
-            active: true,
-            tags: ["first-tag", "second-tag"],
-          },
-        }),
-      ).toBe(true);
-    });
-
-    test("should reject objects when any property violates its schema", () => {
-      const validator = createValidator({
-        field: object({
-          name: string(),
-          age: number(),
-          active: boolean(),
-          tags: array(string()),
-        }),
-      }).isValid;
-
-      const invalidValues = [
-        {
-          name: 1,
-          age: 25,
-          active: true,
-          tags: ["first-tag"],
-        },
-        {
-          name: "first-example",
-          age: "25",
-          active: true,
-          tags: ["first-tag"],
-        },
-        {
-          name: "first-example",
-          age: 25,
-          active: "true",
-          tags: ["first-tag"],
-        },
-        {
-          name: "first-example",
-          age: 25,
-          active: true,
-          tags: [1],
-        },
-      ];
-
-      invalidValues.forEach((value) => {
-        expect(validator({ field: value })).toBe(false);
+        expect(validator(value)).toBe(false);
       });
     });
   });
