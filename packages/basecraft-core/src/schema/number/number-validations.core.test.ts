@@ -1,9 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { createValidator } from "../../create-validator.core.js";
-import { number } from "../../../schema/number.core.js";
+import { number } from "./number.core.js";
 
-describe("number-validation", () => {
-  const validator = createValidator({ field: number() }).isValid;
+describe("number-validations", () => {
+  const validator = number().isValid;
 
   test("should reject invalid number values", () => {
     const invalidValues = [
@@ -22,7 +21,7 @@ describe("number-validation", () => {
     ];
 
     invalidValues.forEach((value) => {
-      expect(validator({ field: value })).toBe(false);
+      expect(validator(value)).toBe(false);
     });
   });
 
@@ -40,7 +39,7 @@ describe("number-validation", () => {
     ];
 
     validValues.forEach((value) => {
-      expect(validator({ field: value })).toBe(true);
+      expect(validator(value)).toBe(true);
     });
   });
 });
