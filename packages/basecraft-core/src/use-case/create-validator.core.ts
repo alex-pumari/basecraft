@@ -1,8 +1,8 @@
-import { FieldSchemas } from "basecraft-types";
+import { Shape } from "basecraft-types";
 import { object } from "../schema/object/object.core.js";
 
-export function createValidator<Shape extends FieldSchemas<Shape>>(
-  shape: Shape,
+export function createValidator<ObjectType extends object>(
+  shape: Shape<ObjectType>,
 ) {
   return object(shape).strict();
 }

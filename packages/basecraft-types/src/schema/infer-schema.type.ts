@@ -9,7 +9,5 @@ export type InferSchema<SchemaType> =
   SchemaType extends NumberSchema ? number :
   SchemaType extends BooleanSchema ? boolean :
   SchemaType extends ArraySchema<infer ItemType> ? ItemType[] :
-  SchemaType extends ObjectSchema<infer ObjectType> ? {
-    [Key in keyof ObjectType]: InferSchema<ObjectType[Key]>;
-  } :
+  SchemaType extends ObjectSchema<infer ObjectType> ? ObjectType :
   never;
