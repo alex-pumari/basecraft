@@ -4,14 +4,14 @@ import {
   UseCaseDependencies,
   UseCaseError,
   UseCaseOptions,
-} from "basecraft-types";
+} from "@basecraft/types";
 import {
   AuthenticationRequiredError,
   AuthorizationError,
   DomainError,
   InvalidRequestError,
   UnexpectedError
-} from "basecraft-errors";
+} from "@basecraft/errors";
 import { createValidator } from "./create-validator.core.js";
 
 export function createUseCase<

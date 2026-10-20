@@ -1,4 +1,4 @@
-import { ArraySchema, InferSchema } from "basecraft-types";
+import { ArraySchema, InferSchema } from "@basecraft/types";
 
 type ItemSchemaConstraint = {
   readonly _brand: string;

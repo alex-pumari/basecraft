@@ -1,4 +1,4 @@
-import { Shape } from "basecraft-types";
+import { Shape } from "@basecraft/types";
 import { object } from "../schema/object/object.core.js";
 
 export function createValidator<ObjectType extends object>(

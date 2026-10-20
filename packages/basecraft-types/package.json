@@ -1,5 +1,5 @@
 {
-  "name": "basecraft-types",
+  "name": "@basecraft/types",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
@@ -10,8 +10,10 @@
     "check:types": "tsc --noEmit",
     "check:code": "eslint ."
   },
+  "dependencies": {
+    "@basecraft/errors": "1.0.0"
+  },
   "devDependencies": {
-    "basecraft-errors": "1.0.0",
     "typescript": "^7.0.2"
   }
 }

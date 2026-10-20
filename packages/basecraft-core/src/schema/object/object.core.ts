@@ -1,5 +1,4 @@
-import { InferShape, ObjectSchema, Shape } from "basecraft-types";
-import { Brand } from "basecraft-types/dist/schema/brand.type.js";
+import { ObjectSchema, Shape, Brand } from "@basecraft/types";
 
 type FieldValidator = { isValid(input: unknown): boolean };
 

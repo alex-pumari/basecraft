@@ -4,7 +4,7 @@ import {
   AuthorizationError,
   InvalidRequestError,
   UnexpectedError,
-} from "basecraft-errors";
+} from "@basecraft/errors";
 import { createUseCase } from "./create-use-case.core.js";
 import { string } from "../schema/string/string.core.js";
 

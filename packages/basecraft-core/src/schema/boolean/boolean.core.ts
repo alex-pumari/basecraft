@@ -1,4 +1,4 @@
-import { BooleanSchema } from "basecraft-types";
+import { BooleanSchema } from "@basecraft/types";
 
 type BooleanCheck = (value: boolean) => boolean;
 

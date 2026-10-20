@@ -1,4 +1,4 @@
-import { NumberSchema } from "basecraft-types";
+import { NumberSchema } from "@basecraft/types";
 
 type NumberCheck = (value: number) => boolean;
 

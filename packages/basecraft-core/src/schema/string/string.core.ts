@@ -1,4 +1,4 @@
-import { StringSchema } from "basecraft-types";
+import { StringSchema } from "@basecraft/types";
 
 type StringCheck = (value: string) => boolean;
 

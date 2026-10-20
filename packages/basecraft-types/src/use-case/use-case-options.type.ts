@@ -1,4 +1,4 @@
-import { DomainError } from "basecraft-errors";
+import { DomainError } from "@basecraft/errors";
 import { Shape } from "../schema/shape.type.js";
 import { Result } from "./result.type.js";
 import { UseCaseDependencies } from "./use-case-dependencies.type.js";

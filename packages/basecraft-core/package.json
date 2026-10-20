@@ -1,5 +1,5 @@
 {
-  "name": "basecraft-core",
+  "name": "@basecraft/core",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
@@ -12,8 +12,8 @@
     "check:code": "eslint ."
   },
   "dependencies": {
-    "basecraft-errors": "1.0.0",
-    "basecraft-types": "1.0.0"
+    "@basecraft/errors": "1.0.0",
+    "@basecraft/types": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^7.0.2",

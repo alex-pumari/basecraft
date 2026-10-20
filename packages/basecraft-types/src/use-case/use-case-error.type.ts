@@ -4,7 +4,7 @@ import {
   DomainError,
   InvalidRequestError,
   UnexpectedError,
-} from "basecraft-errors";
+} from "@basecraft/errors";
 
 export type UseCaseError<CustomError extends DomainError> =
   | CustomError

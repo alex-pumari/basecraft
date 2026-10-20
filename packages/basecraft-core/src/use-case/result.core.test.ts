@@ -6,7 +6,7 @@ import {
   DomainError,
   InvalidRequestError,
   UnexpectedError,
-} from "basecraft-errors";
+} from "@basecraft/errors";
 
 class CustomDomainError extends DomainError<"CUSTOM_DOMAIN_ERROR"> {
   readonly code = "CUSTOM_DOMAIN_ERROR";
