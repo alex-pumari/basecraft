@@ -1,4 +1,4 @@
-import { RequireAtLeastOne } from "../require-at-least-one.type.js";
+import { RequireAtLeastOne } from "../util/require-at-least-one.type.js";
 
 export type FilterOperators<Value> = RequireAtLeastOne<{
   eq?: Value;

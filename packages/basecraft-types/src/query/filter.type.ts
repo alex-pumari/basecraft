@@ -1,5 +1,5 @@
 import { FilterOperators } from "./filter-operators.type.js";
-import { RequireAtLeastOne } from "../require-at-least-one.type.js";
+import { RequireAtLeastOne } from "../util/require-at-least-one.type.js";
 
 export type Filter<Field extends string, Value> = {
   field: Field;
