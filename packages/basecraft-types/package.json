@@ -2,8 +2,8 @@
   "name": "@basecraft/types",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",

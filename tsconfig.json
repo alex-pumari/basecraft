@@ -1,8 +1,8 @@
 {
   "files": [],
   "references": [
-    { "path": "./packages/basecraft-types" },
     { "path": "./packages/basecraft-errors" },
-    { "path": "./packages/basecraft-core" },
+    { "path": "./packages/basecraft-types" },
+    { "path": "./packages/basecraft-core" }
   ]
 }
