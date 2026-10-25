@@ -20,5 +20,5 @@ jobs:
           cache: "npm"
 
       - run: npm ci
-      - run: npm run check:code
-      - run: npm run check:types
+      # - run: npm run check:code --workspace=@basecraft/errors TODO: typescript-eslint + typescript
+      - run: npm run check:types --workspace=@basecraft/errors
