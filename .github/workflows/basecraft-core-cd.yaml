@@ -1,0 +1,31 @@
+name: Basecraft core CD
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "packages/basecraft-core/**"
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - run: npm ci
+      # - run: npm run check:code --workspace=@basecraft/errors TODO: typescript-eslint + typescript
+
+      - name: Build package
+        run: npm run build --workspace=@basecraft/core
+
+      - name: Publish package
+        run: npm publish --workspace=@basecraft/core --access public
+        env:
+          # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} TODO: ver cómo falla

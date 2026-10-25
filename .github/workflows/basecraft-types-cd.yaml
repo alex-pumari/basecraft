@@ -1,0 +1,31 @@
+name: Basecraft types CD
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "packages/basecraft-types/**"
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - run: npm ci
+      # - run: npm run check:code --workspace=@basecraft/types TODO: typescript-eslint + typescript
+
+      - name: Build package
+        run: npm run build --workspace=@basecraft/types
+
+      - name: Publish package
+        run: npm publish --workspace=@basecraft/types --access public
+        env:
+          # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} TODO: ver cómo falla
