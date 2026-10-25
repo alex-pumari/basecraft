@@ -5,47 +5,51 @@
 <h1 align="center">Basecraft</h1>
 
 <p align="center">
-  Piezas chicas en TypeScript para armar casos de uso con validación y errores de dominio tipados.
+  Paquetes TypeScript para aplicar Clean Architecture con tipos, utilidades y errores de dominio.
 </p>
 
 ---
 
-Basecraft es un monorepo con las bases que uso para estructurar la lógica de negocio de una app: esquemas para validar datos, casos de uso que reciben dependencias y usuario, y un `Result` para no andar tirando excepciones por todos lados.
+Basecraft es un conjunto de paquetes diseñados para ayudarte a estructurar la lógica de negocio de tus aplicaciones siguiendo los principios de **Clean Architecture**.
 
-Todavía está en desarrollo, así que la API puede cambiar.
+Incluye tipos compartidos, utilidades para construir casos de uso y validadores, y errores de dominio tipados.
+
+Su principal ventaja es la **modularidad**: no necesitas instalar todo el ecosistema. Puedes incorporar únicamente los paquetes que necesites y sumar otros a medida que lo necesites.
 
 ## Paquetes
 
-| Paquete | Qué hace |
-| --- | --- |
-| `basecraft-core` | Esquemas (`string`, `number`, `boolean`, `array`, `object`), `createUseCase`, `createValidator` y `createResult` |
-| `basecraft-types` | Los tipos compartidos entre los demás paquetes |
-| `basecraft-errors` | Errores base, como `DomainError` |
+| Paquete | Descripción | Instalación |
+| --- | --- | --- |
+| [`@basecraft/types`](./packages/basecraft-types/README.md) | Tipos compartidos para mantener contratos consistentes entre las distintas capas de la aplicación. | `npm install -D @basecraft/types` |
+| [`@basecraft/errors`](./packages/basecraft-errors/README.md) | Errores base de dominio, como `DomainError`, para representar y manejar errores de negocio de forma explícita. | `npm install @basecraft/errors` |
+| [`@basecraft/core`](./packages/basecraft-core/README.md) | Implementaciones y utilidades para crear esquemas de validación, validadores, casos de uso y resultados tipados. | `npm install @basecraft/core` |
 
-## Ejemplo rápido
+> **¿Qué necesitas?**
+>
+> - Solo los tipos compartidos: instala `@basecraft/types` como dependencia de desarrollo.
+> - Manejar errores de dominio: instala `@basecraft/errors`.
+> - Construir casos de uso y validaciones: instala `@basecraft/core`.
+> - Necesitas varias funcionalidades: combina los paquetes según los requisitos de tu proyecto.
 
-```ts
-import { createUseCase, createResult, string } from "basecraft-core";
+## Instalación
 
-const createPost = createUseCase({
-  authenticationRequired: true,
-  allowedRoles: ["admin", "editor"],
-  requestShape: {
-    title: string().contains("ist"),
-  },
-  handler: async (dependencies, request) => {
-    dependencies.logger.log(`Procesando post: ${request.title}`);
-    return createResult.success({ id: "post_123" });
-  },
-});
-```
-
-## Cómo empezar
+Instala únicamente los paquetes que necesites:
 
 ```bash
-npm install
-npm run build
-npm test
+# Tipos compartidos (dependencia de desarrollo)
+npm install -D @basecraft/types
+
+# Errores de dominio (dependencia de producción)
+npm install @basecraft/errors
+
+# Casos de uso, validaciones y resultados (dependencia de producción)
+npm install @basecraft/core
 ```
 
-Otros scripts útiles: `npm run check:types` y `npm run check:code`.
+## Documentación
+
+Consulta la documentación de cada paquete para conocer sus funcionalidades, API y ejemplos de uso:
+
+- [@basecraft/core — README](./packages/basecraft-core/README.md)
+- [@basecraft/types — README](./packages/basecraft-types/README.md)
+- [@basecraft/errors — README](./packages/basecraft-errors/README.md)
