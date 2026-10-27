@@ -1,17 +1,22 @@
 import { BooleanSchema } from "@basecraft/types";
+import { appendRule, equalToRule, passesAllRules } from "../../util/index.js";
 
-type BooleanCheck = (value: boolean) => boolean;
+type BooleanRule = (value: boolean) => boolean;
 
-function createBooleanSchema(checks: readonly BooleanCheck[]): BooleanSchema {
+function createBooleanSchema(
+  rules: readonly BooleanRule[] = [],
+): BooleanSchema {
+  const createSchemaWithRule = (rule: BooleanRule) =>
+    createBooleanSchema(appendRule(rules, rule));
+
   return {
     _brand: "BOOLEAN",
     isValid: (input: unknown): input is boolean =>
-      typeof input === "boolean" && checks.every((check) => check(input)),
-    equal: (target) =>
-      createBooleanSchema([...checks, (value) => value === target]),
+      typeof input === "boolean" && passesAllRules(input, rules),
+    equal: (target) => createSchemaWithRule(equalToRule(target)),
   };
 }
 
 export function boolean(): BooleanSchema {
-  return createBooleanSchema([]);
+  return createBooleanSchema();
 }
