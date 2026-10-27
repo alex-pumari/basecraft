@@ -1,20 +1,33 @@
 import { StringSchema } from "@basecraft/types";
+import {
+  appendRule,
+  maxLengthRule,
+  minLengthRule,
+  passesAllRules,
+} from "../../util/index.js";
 
-type StringCheck = (value: string) => boolean;
+type StringRule = (value: string) => boolean;
 
-function createStringSchema(checks: readonly StringCheck[]): StringSchema {
-  const extend = (check: StringCheck) => createStringSchema([...checks, check]);
+function containsRule(substring: string): StringRule {
+  return (value) => value.includes(substring);
+}
+
+function createStringSchema(
+  rules: readonly StringRule[] = [],
+): StringSchema {
+  const createSchemaWithRule = (rule: StringRule) =>
+    createStringSchema(appendRule(rules, rule));
 
   return {
     _brand: "STRING",
     isValid: (input: unknown): input is string =>
-      typeof input === "string" && checks.every((check) => check(input)),
-    contains: (substring) => extend((value) => value.includes(substring)),
-    minLength: (length) => extend((value) => value.length >= length),
-    maxLength: (length) => extend((value) => value.length <= length),
+      typeof input === "string" && passesAllRules(input, rules),
+    contains: (substring) => createSchemaWithRule(containsRule(substring)),
+    minLength: (length) => createSchemaWithRule(minLengthRule(length)),
+    maxLength: (length) => createSchemaWithRule(maxLengthRule(length)),
   };
 }
 
 export function string(): StringSchema {
-  return createStringSchema([]);
+  return createStringSchema();
 }
