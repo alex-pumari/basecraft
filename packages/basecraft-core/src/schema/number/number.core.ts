@@ -1,40 +1,62 @@
 import { NumberSchema } from "@basecraft/types";
+import {
+  appendRule,
+  countDecimalPlaces,
+  equalToRule,
+  normalizePlaces,
+  passesAllRules,
+} from "../../util/index.js";
 
-type NumberCheck = (value: number) => boolean;
+type NumberRule = (value: number) => boolean;
 
-function countDecimalPlaces(value: number): number {
-  const [mantissa = "", exponent = "0"] = String(value).split("e");
-  const mantissaPlaces = mantissa.split(".")[1]?.length ?? 0;
-
-  return Math.max(0, mantissaPlaces - Number(exponent));
+function integerRule(): NumberRule {
+  return (value) => Number.isInteger(value);
 }
 
-function normalizePlaces(places: number): number {
-  return Number.isFinite(places) ? Math.max(0, Math.trunc(places)) : 0;
+function positiveRule(): NumberRule {
+  return (value) => value > 0;
 }
 
-function createNumberSchema(checks: readonly NumberCheck[]): NumberSchema {
-  const extend = (check: NumberCheck) => createNumberSchema([...checks, check]);
+function negativeRule(): NumberRule {
+  return (value) => value < 0;
+}
+
+function decimalPlacesRule(places: number): NumberRule {
+  const maxPlaces = normalizePlaces(places);
+  return (value) => countDecimalPlaces(value) <= maxPlaces;
+}
+
+function greaterThanRule(target: number): NumberRule {
+  return (value) => value > target;
+}
+
+function lessThanRule(target: number): NumberRule {
+  return (value) => value < target;
+}
+
+function createNumberSchema(
+  rules: readonly NumberRule[] = [],
+): NumberSchema {
+  const createSchemaWithRule = (rule: NumberRule) =>
+    createNumberSchema(appendRule(rules, rule));
 
   return {
     _brand: "NUMBER",
     isValid: (input: unknown): input is number =>
       typeof input === "number" &&
       Number.isFinite(input) &&
-      checks.every((check) => check(input)),
-    integer: () => extend((value) => Number.isInteger(value)),
-    positive: () => extend((value) => value > 0),
-    negative: () => extend((value) => value < 0),
-    decimalPlaces: (places) => {
-      const maxPlaces = normalizePlaces(places);
-      return extend((value) => countDecimalPlaces(value) <= maxPlaces);
-    },
-    equal: (target) => extend((value) => value === target),
-    greaterThan: (target) => extend((value) => value > target),
-    lessThan: (target) => extend((value) => value < target),
+      passesAllRules(input, rules),
+    integer: () => createSchemaWithRule(integerRule()),
+    positive: () => createSchemaWithRule(positiveRule()),
+    negative: () => createSchemaWithRule(negativeRule()),
+    decimalPlaces: (places) =>
+      createSchemaWithRule(decimalPlacesRule(places)),
+    equal: (target) => createSchemaWithRule(equalToRule(target)),
+    greaterThan: (target) => createSchemaWithRule(greaterThanRule(target)),
+    lessThan: (target) => createSchemaWithRule(lessThanRule(target)),
   };
 }
 
 export function number(): NumberSchema {
-  return createNumberSchema([]);
+  return createNumberSchema();
 }
