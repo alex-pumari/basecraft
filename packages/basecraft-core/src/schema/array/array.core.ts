@@ -1,44 +1,24 @@
-import { ArraySchema, InferSchema } from "@basecraft/types";
+import { ArraySchema, InferSchema, BaseSchema } from "@basecraft/types";
+import {
+  appendRule,
+  isDeepEqual,
+  maxLengthRule,
+  minLengthRule,
+  passesAllRules,
+} from "../../util/index.js";
 
-type ItemSchemaConstraint = {
-  readonly _brand: string;
-  isValid(input: unknown): boolean;
-};
+type ArrayRule = (value: unknown[]) => boolean;
 
-type ArrayCheck = (value: unknown[]) => boolean;
-
-function deepEqual(first: unknown, second: unknown): boolean {
-  if (Object.is(first, second)) return true;
-  if (
-    typeof first !== "object" ||
-    typeof second !== "object" ||
-    first === null ||
-    second === null
-  ) {
-    return false;
-  }
-  if (Array.isArray(first) !== Array.isArray(second)) return false;
-
-  const firstRecord = first as Record<string, unknown>;
-  const secondRecord = second as Record<string, unknown>;
-  const firstKeys = Object.keys(firstRecord);
-
-  return (
-    firstKeys.length === Object.keys(secondRecord).length &&
-    firstKeys.every(
-      (key) =>
-        Object.hasOwn(secondRecord, key) &&
-        deepEqual(firstRecord[key], secondRecord[key]),
-    )
-  );
+function containsRule(item: unknown): ArrayRule {
+  return (value) => value.some((entry) => isDeepEqual(entry, item));
 }
 
 function createArraySchema<ItemType>(
-  itemSchema: ItemSchemaConstraint | undefined,
-  checks: readonly ArrayCheck[],
+  itemSchema: BaseSchema<any> | undefined,
+  rules: readonly ArrayRule[] = [],
 ): ArraySchema<ItemType> {
-  const extend = (check: ArrayCheck) =>
-    createArraySchema<ItemType>(itemSchema, [...checks, check]);
+  const createSchemaWithRule = (rule: ArrayRule) =>
+    createArraySchema<ItemType>(itemSchema, appendRule(rules, rule));
 
   return {
     _brand: "ARRAY",
@@ -46,18 +26,19 @@ function createArraySchema<ItemType>(
       Array.isArray(input) &&
       (itemSchema === undefined ||
         input.every((item) => itemSchema.isValid(item))) &&
-      checks.every((check) => check(input)),
-    contains: (item) =>
-      extend((value) => value.some((entry) => deepEqual(entry, item))),
-    minLength: (length) => extend((value) => value.length >= length),
-    maxLength: (length) => extend((value) => value.length <= length),
+      passesAllRules(input, rules),
+    contains: (item) => createSchemaWithRule(containsRule(item)),
+    minLength: (length) => createSchemaWithRule(minLengthRule(length)),
+    maxLength: (length) => createSchemaWithRule(maxLengthRule(length)),
   };
 }
 
 export function array(): ArraySchema<unknown>;
-export function array<ItemSchema extends ItemSchemaConstraint>(
+export function array<ItemSchema extends BaseSchema<any>>(
   itemSchema: ItemSchema
 ): ArraySchema<InferSchema<ItemSchema>>;
-export function array(itemSchema?: ItemSchemaConstraint) {
-  return createArraySchema(itemSchema, []);
+export function array<ItemSchema extends BaseSchema<any>>(
+  itemSchema?: ItemSchema
+) {
+  return createArraySchema(itemSchema);
 }

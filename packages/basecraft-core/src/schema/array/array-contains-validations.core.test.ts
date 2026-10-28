@@ -19,6 +19,12 @@ describe("array-contains-validations", () => {
     expect(validator([2, 3])).toBe(false);
   });
 
+  test("should not match nested elements", () => {
+    const validator = array().contains(1).isValid;
+
+    expect(validator([[1], 2, 3])).toBe(false);
+  });
+
   test("should accept arrays containing the specified string", () => {
     const validator = array().contains("item-example").isValid;
 
@@ -109,6 +115,12 @@ describe("array-contains-validations", () => {
     invalidValues.forEach((value) => {
       expect(validator(value)).toBe(false);
     });
+  });
+
+  test("should reject arrays containing the specified number only in nested arrays", () => {
+    const validator = array(number()).contains(42).isValid;
+
+    expect(validator([[42], 1, 2])).toBe(false);
   });
 
   test("should accept arrays containing the specified boolean", () => {
