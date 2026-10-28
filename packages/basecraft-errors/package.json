@@ -9,6 +9,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "check:types": "tsc --noEmit",
+    "check:format": "prettier . --check",
     "check:code": "eslint ."
   },
   "devDependencies": {

@@ -10,6 +10,7 @@
     "clean": "rm -rf dist",
     "test": "vitest --run",
     "check:types": "tsc --noEmit",
+    "check:format": "prettier . --check",
     "check:code": "eslint ."
   },
   "dependencies": {

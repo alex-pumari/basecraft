@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "prettier": "3.9.10",
     "typescript": "^7.0.2"
   },
   "scripts": {
@@ -12,6 +13,6 @@
     "clean": "npm run clean --ws",
     "test": "npm run test --ws --if-present",
     "check:types": "npm run check:types --ws",
-    "check:code": "npm run check:code --ws"
+    "check:format": "npm run check:format --ws"
   }
 }
