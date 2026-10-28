@@ -47,11 +47,7 @@ describe("strict-object-validations", () => {
       age: number(),
     }).strict().isValid;
 
-    const invalidValues = [
-      {},
-      { name: "first-example" },
-      { age: 25 },
-    ];
+    const invalidValues = [{}, { name: "first-example" }, { age: 25 }];
 
     invalidValues.forEach((value) => {
       expect(validator(value)).toBe(false);

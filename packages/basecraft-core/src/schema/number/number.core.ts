@@ -34,9 +34,7 @@ function lessThanRule(target: number): NumberRule {
   return (value) => value < target;
 }
 
-function createNumberSchema(
-  rules: readonly NumberRule[] = [],
-): NumberSchema {
+function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
   const createSchemaWithRule = (rule: NumberRule) =>
     createNumberSchema(appendRule(rules, rule));
 
@@ -49,8 +47,7 @@ function createNumberSchema(
     integer: () => createSchemaWithRule(integerRule()),
     positive: () => createSchemaWithRule(positiveRule()),
     negative: () => createSchemaWithRule(negativeRule()),
-    decimalPlaces: (places) =>
-      createSchemaWithRule(decimalPlacesRule(places)),
+    decimalPlaces: (places) => createSchemaWithRule(decimalPlacesRule(places)),
     equal: (target) => createSchemaWithRule(equalToRule(target)),
     greaterThan: (target) => createSchemaWithRule(greaterThanRule(target)),
     lessThan: (target) => createSchemaWithRule(lessThanRule(target)),

@@ -5,7 +5,14 @@ describe("negative-number-validations", () => {
   const validator = number().negative().isValid;
 
   test("should accept negative values", () => {
-    const validValues = [-1, -0.1, -42, -3.14, -Number.MIN_VALUE, -Number.MAX_VALUE];
+    const validValues = [
+      -1,
+      -0.1,
+      -42,
+      -3.14,
+      -Number.MIN_VALUE,
+      -Number.MAX_VALUE,
+    ];
 
     validValues.forEach((value) => {
       expect(validator(value)).toBe(true);

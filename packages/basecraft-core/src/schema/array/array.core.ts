@@ -35,10 +35,10 @@ function createArraySchema<ItemType>(
 
 export function array(): ArraySchema<unknown>;
 export function array<ItemSchema extends BaseSchema<any>>(
-  itemSchema: ItemSchema
+  itemSchema: ItemSchema,
 ): ArraySchema<InferSchema<ItemSchema>>;
 export function array<ItemSchema extends BaseSchema<any>>(
-  itemSchema?: ItemSchema
+  itemSchema?: ItemSchema,
 ) {
   return createArraySchema(itemSchema);
 }

@@ -86,12 +86,7 @@ describe("object-validations", () => {
     test("should accept objects whose properties match the number schema", () => {
       const validator = object({ age: number() }).isValid;
 
-      const validValues = [
-        { age: 0 },
-        { age: 25 },
-        { age: -10 },
-        { age: 3.5 },
-      ];
+      const validValues = [{ age: 0 }, { age: 25 }, { age: -10 }, { age: 3.5 }];
 
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
@@ -151,11 +146,7 @@ describe("object-validations", () => {
         age: number(),
       }).isValid;
 
-      const invalidValues = [
-        {},
-        { name: "first-example" },
-        { age: 25 },
-      ];
+      const invalidValues = [{}, { name: "first-example" }, { age: 25 }];
 
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);

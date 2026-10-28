@@ -12,9 +12,7 @@ function containsRule(substring: string): StringRule {
   return (value) => value.includes(substring);
 }
 
-function createStringSchema(
-  rules: readonly StringRule[] = [],
-): StringSchema {
+function createStringSchema(rules: readonly StringRule[] = []): StringSchema {
   const createSchemaWithRule = (rule: StringRule) =>
     createStringSchema(appendRule(rules, rule));
 

@@ -37,7 +37,7 @@ function createObjectSchema<ObjectType extends object>(
 }
 
 export function object<ObjectType extends object>(
-  shape: Shape<ObjectType>
+  shape: Shape<ObjectType>,
 ): ObjectSchema<ObjectType> {
   return createObjectSchema(shape);
 }

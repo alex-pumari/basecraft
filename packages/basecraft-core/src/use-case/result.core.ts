@@ -3,7 +3,7 @@ export const result = {
     return value instanceof Error;
   },
 
-	isSuccess<Value>(value: Value | Error): value is Value {
-		return !(value instanceof Error);
-	},
+  isSuccess<Value>(value: Value | Error): value is Value {
+    return !(value instanceof Error);
+  },
 };

@@ -35,3 +35,6 @@ pnpm-lock.yaml
 
 # Generated TypeScript files
 *.tsbuildinfo
+
+# Documentation files
+*.md

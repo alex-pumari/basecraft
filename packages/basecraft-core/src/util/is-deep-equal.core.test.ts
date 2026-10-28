@@ -23,7 +23,9 @@ describe("is-deep-equal", () => {
   });
 
   test("should reject a primitive compared with an object", () => {
-    expect(isDeepEqual("value-example", { field: "value-example" })).toBe(false);
+    expect(isDeepEqual("value-example", { field: "value-example" })).toBe(
+      false,
+    );
     expect(isDeepEqual(1, [1])).toBe(false);
   });
 

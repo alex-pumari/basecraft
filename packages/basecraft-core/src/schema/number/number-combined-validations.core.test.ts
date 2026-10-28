@@ -82,27 +82,25 @@ describe("number-combined-validations", () => {
     });
   });
 
-
   describe("negative and integer", () => {
     const validator = number().integer().negative().isValid;
-  
+
     test("should accept negative integers", () => {
       const validValues = [-1, -2, -42, -100];
-  
+
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
       });
     });
-  
+
     test("should reject values that are not negative integers", () => {
       const invalidValues = [1, 0, -1.5, 1.5, NaN, -Infinity];
-  
+
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);
       });
     });
   });
-
 
   describe("negative and decimal places", () => {
     const validator = number().decimalPlaces(2).negative().isValid;
@@ -126,18 +124,18 @@ describe("number-combined-validations", () => {
 
   describe("positive and integer", () => {
     const validator = number().integer().positive().isValid;
-  
+
     test("should accept positive integers", () => {
       const validValues = [1, 2, 42, 100];
-  
+
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
       });
     });
-  
+
     test("should reject values that are not positive integers", () => {
       const invalidValues = [-1, 0, 1.5, -1.5, NaN, Infinity];
-  
+
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);
       });

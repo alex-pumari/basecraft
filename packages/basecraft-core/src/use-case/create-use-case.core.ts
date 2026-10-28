@@ -10,7 +10,7 @@ import {
   AuthorizationError,
   DomainError,
   InvalidRequestError,
-  UnexpectedError
+  UnexpectedError,
 } from "@basecraft/errors";
 import { createValidator } from "./create-validator.core.js";
 
@@ -20,17 +20,13 @@ export function createUseCase<
   Response,
   CustomError extends DomainError,
 >(
-  options: UseCaseOptions<
-    Dependencies,
-    Request,
-    Response,
-    CustomError
-  >,
+  options: UseCaseOptions<Dependencies, Request, Response, CustomError>,
 ): UseCase<Dependencies, Request, Response, CustomError> {
   const requestValidator = createValidator(options.requestShape);
 
   const roleAuthorizationRequired = options.allowedRoles !== undefined;
-  const authenticationRequired = options.authenticationRequired || roleAuthorizationRequired;
+  const authenticationRequired =
+    options.authenticationRequired || roleAuthorizationRequired;
 
   return {
     execute: async (
@@ -59,7 +55,6 @@ export function createUseCase<
       try {
         return await options.handler(dependencies, request);
       } catch (error: unknown) {
-
         if (error instanceof DomainError) {
           return error as UseCaseError<CustomError>;
         }

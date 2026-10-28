@@ -6,7 +6,7 @@ import { PageResult } from "./page-result.type.js";
 export interface PaginatedReadRepository<
   CustomEntity extends Entity<CustomEntity[IdentifierField]>,
   FindQuery,
-  SortableField extends string
+  SortableField extends string,
 > {
   findById(id: CustomEntity[IdentifierField]): Promise<CustomEntity | null>;
 
@@ -14,6 +14,6 @@ export interface PaginatedReadRepository<
     query: FindQuery & {
       pagination?: Pagination;
       sort?: Sort<SortableField> | Sort<SortableField>[];
-    }
+    },
   ): Promise<PageResult<CustomEntity>>;
 }

@@ -3,7 +3,5 @@ export interface UpdateRepository<Identifier, Input> {
 }
 
 export interface BulkUpdateRepository<Identifier, Input> {
-  updateMany(
-    items: Array<{ id: Identifier; input: Input }>
-  ): Promise<void>;
+  updateMany(items: Array<{ id: Identifier; input: Input }>): Promise<void>;
 }

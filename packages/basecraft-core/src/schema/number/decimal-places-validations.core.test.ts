@@ -14,17 +14,7 @@ describe("decimal-places-validations", () => {
   test("should accept decimals within the specified places", () => {
     const validator = number().decimalPlaces(2).isValid;
     const validValues = [
-      0.1,
-      -0.1,
-      1.5,
-      -1.5,
-      3.14,
-      -3.14,
-      7.12,
-      -7.12,
-      0.01,
-      -0.01,
-      99.99,
+      0.1, -0.1, 1.5, -1.5, 3.14, -3.14, 7.12, -7.12, 0.01, -0.01, 99.99,
     ];
 
     validValues.forEach((value) => {
@@ -34,15 +24,7 @@ describe("decimal-places-validations", () => {
 
   test("should reject decimals exceeding the specified places", () => {
     const validator = number().decimalPlaces(2).isValid;
-    const invalidValues = [
-      1.234,
-      -1.234,
-      3.141,
-      -3.141,
-      0.001,
-      -0.001,
-      99.999,
-    ];
+    const invalidValues = [1.234, -1.234, 3.141, -3.141, 0.001, -0.001, 99.999];
 
     invalidValues.forEach((value) => {
       expect(validator(value)).toBe(false);
@@ -60,16 +42,7 @@ describe("decimal-places-validations", () => {
 
   test("should reject non-integer values when places is zero", () => {
     const validator = number().decimalPlaces(0).isValid;
-    const invalidValues = [
-      0.1,
-      -0.1,
-      1.5,
-      -1.5,
-      3.14,
-      -3.14,
-      0.001,
-      -0.001,
-    ];
+    const invalidValues = [0.1, -0.1, 1.5, -1.5, 3.14, -3.14, 0.001, -0.001];
 
     invalidValues.forEach((value) => {
       expect(validator(value)).toBe(false);
