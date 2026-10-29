@@ -89,4 +89,44 @@ describe("string-combined-validations", () => {
       });
     });
   });
+
+  describe("contains and optional", () => {
+    const validator = string().contains("abc").optional().isValid;
+
+    test("should accept an optional value and strings that contain the substring", () => {
+      const validValues = [undefined, "abc", "abcde", "value-abc"];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and strings that do not contain the substring", () => {
+      const invalidValues = [null, "", "ab", "value"];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("min length, max length and optional", () => {
+    const validator = string().min(3).max(5).optional().isValid;
+
+    test("should accept an optional value and strings within the specified range", () => {
+      const validValues = [undefined, "abc", "abcd", "abcde"];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and strings outside the specified range", () => {
+      const invalidValues = [null, "", "a", "ab", "abcdef"];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
 });
