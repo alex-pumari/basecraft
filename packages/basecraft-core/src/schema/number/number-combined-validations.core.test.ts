@@ -3,7 +3,7 @@ import { number } from "./number.core.js";
 
 describe("number-combined-validations", () => {
   describe("greater than and integer", () => {
-    const validator = number().integer().greaterThan(10).isValid;
+    const validator = number().int().gt(10).isValid;
 
     test("should accept integers greater than the target", () => {
       const validValues = [11, 12, 20, 100];
@@ -23,7 +23,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("greater than and decimal places", () => {
-    const validator = number().decimalPlaces(2).greaterThan(10).isValid;
+    const validator = number().decimalPlaces(2).gt(10).isValid;
 
     test("should accept values greater than the target within the decimal places", () => {
       const validValues = [10.1, 10.25, 11, 12.75, 100.99];
@@ -43,7 +43,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("less than and decimal places", () => {
-    const validator = number().decimalPlaces(2).lessThan(10).isValid;
+    const validator = number().decimalPlaces(2).lt(10).isValid;
 
     test("should accept values less than the target within the decimal places", () => {
       const validValues = [-10.5, -1.5, 0.5, 1.75, 9.99, 9];
@@ -63,7 +63,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("less than and integer", () => {
-    const validator = number().integer().lessThan(10).isValid;
+    const validator = number().int().lt(10).isValid;
 
     test("should accept integers less than the target", () => {
       const validValues = [-10, -1, 0, 1, 9];
@@ -83,7 +83,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("negative and integer", () => {
-    const validator = number().integer().negative().isValid;
+    const validator = number().int().negative().isValid;
 
     test("should accept negative integers", () => {
       const validValues = [-1, -2, -42, -100];
@@ -123,7 +123,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("positive and integer", () => {
-    const validator = number().integer().positive().isValid;
+    const validator = number().int().positive().isValid;
 
     test("should accept positive integers", () => {
       const validValues = [1, 2, 42, 100];

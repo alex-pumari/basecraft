@@ -22,7 +22,7 @@ describe("number-comparison-validations", () => {
 
   describe("greater than", () => {
     test("should accept values greater than the target", () => {
-      const validator = number().greaterThan(10).isValid;
+      const validator = number().gt(10).isValid;
 
       const validValues = [10.1, 11, 20, 100];
 
@@ -32,7 +32,7 @@ describe("number-comparison-validations", () => {
     });
 
     test("should reject values less than or equal to the target", () => {
-      const validator = number().greaterThan(10).isValid;
+      const validator = number().gt(10).isValid;
 
       const invalidValues = [10, 9.9, 9, 0, -10];
 
@@ -44,7 +44,7 @@ describe("number-comparison-validations", () => {
 
   describe("less than", () => {
     test("should accept values less than the target", () => {
-      const validator = number().lessThan(10).isValid;
+      const validator = number().lt(10).isValid;
 
       const validValues = [-100, -1, 0, 9, 9.9];
 
@@ -54,7 +54,7 @@ describe("number-comparison-validations", () => {
     });
 
     test("should reject values greater than or equal to the target", () => {
-      const validator = number().lessThan(10).isValid;
+      const validator = number().lt(10).isValid;
 
       const invalidValues = [10, 10.1, 11, 100];
 

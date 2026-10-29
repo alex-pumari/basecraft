@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { number } from "./number.core.js";
 
 describe("integer-validations", () => {
-  const validator = number().integer().isValid;
+  const validator = number().int().isValid;
 
   test("should accept integer values", () => {
     const validValues = [0, 1, -1, 42, -42, Number.MAX_SAFE_INTEGER];

@@ -44,13 +44,13 @@ function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
       typeof input === "number" &&
       Number.isFinite(input) &&
       passesAllRules(input, rules),
-    integer: () => createSchemaWithRule(integerRule()),
+    int: () => createSchemaWithRule(integerRule()),
     positive: () => createSchemaWithRule(positiveRule()),
     negative: () => createSchemaWithRule(negativeRule()),
     decimalPlaces: (places) => createSchemaWithRule(decimalPlacesRule(places)),
     equal: (target) => createSchemaWithRule(equalToRule(target)),
-    greaterThan: (target) => createSchemaWithRule(greaterThanRule(target)),
-    lessThan: (target) => createSchemaWithRule(lessThanRule(target)),
+    gt: (target) => createSchemaWithRule(greaterThanRule(target)),
+    lt: (target) => createSchemaWithRule(lessThanRule(target)),
   };
 }
 
