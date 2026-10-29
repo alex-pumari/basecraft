@@ -129,4 +129,24 @@ describe("string-combined-validations", () => {
       });
     });
   });
+
+  describe("contains, min length, max length and optional", () => {
+    const validator = string().contains("abc").min(3).max(8).optional().isValid;
+
+    test("should accept an optional value and strings that satisfy all constraints", () => {
+      const validValues = [undefined, "abc", "abcde", "abc more"];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and strings that violate at least one constraint", () => {
+      const invalidValues = [null, "", "ab", "value", "abcdefghij"];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
 });

@@ -161,4 +161,164 @@ describe("number-combined-validations", () => {
       });
     });
   });
+
+  describe("positive integer and optional", () => {
+    const validator = number().int().positive().optional().isValid;
+
+    test("should accept an optional value and positive integers", () => {
+      const validValues = [undefined, 1, 2, 42, 100];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and values that are not positive integers", () => {
+      const invalidValues = [0, -1, 1.5, -1.5, NaN, Infinity];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("negative integer and optional", () => {
+    const validator = number().int().negative().optional().isValid;
+
+    test("should accept an optional value and negative integers", () => {
+      const validValues = [undefined, -1, -2, -42, -100];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and non-negative integers", () => {
+      const invalidValues = [null, 0, 1, -0.1, -1.5, NaN, Infinity];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("equal and optional", () => {
+    const validator = number().equal(10).optional().isValid;
+
+    test("should accept an optional value and the target number", () => {
+      const validValues = [undefined, 10];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers different from the target", () => {
+      const invalidValues = [null, 9, 9.9, 10.1, 11, -10];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("greater than and optional", () => {
+    const validator = number().gt(10).optional().isValid;
+
+    test("should accept an optional value and numbers greater than the target", () => {
+      const validValues = [undefined, 10.1, 11, 20, 100];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers less than or equal to the target", () => {
+      const invalidValues = [null, 10, 9.9, 9, 0, -10];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("greater than or equal and optional", () => {
+    const validator = number().gte(10).optional().isValid;
+
+    test("should accept an optional value and numbers greater than or equal to the target", () => {
+      const validValues = [undefined, 10, 10.1, 11, 20, 100];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers less than the target", () => {
+      const invalidValues = [null, 9.9, 9, 0, -10];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("less than and optional", () => {
+    const validator = number().lt(10).optional().isValid;
+
+    test("should accept an optional value and numbers less than the target", () => {
+      const validValues = [undefined, -100, -1, 0, 9, 9.9];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers greater than or equal to the target", () => {
+      const invalidValues = [null, 10, 10.1, 11, 100];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("less than or equal and optional", () => {
+    const validator = number().lte(10).optional().isValid;
+
+    test("should accept an optional value and numbers less than or equal to the target", () => {
+      const validValues = [undefined, -100, -1, 0, 9, 9.9, 10];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers greater than the target", () => {
+      const invalidValues = [null, 10.1, 11, 100];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("decimal places and optional", () => {
+    const validator = number().decimal(2).optional().isValid;
+
+    test("should accept an optional value and numbers within the decimal places", () => {
+      const validValues = [undefined, 0, 1, -1, 1.23, -3.14, 10.25];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers exceeding the decimal places", () => {
+      const invalidValues = [null, 1.234, -3.141, 0.001, NaN, Infinity];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
 });

@@ -1,4 +1,5 @@
 import { NumberSchema } from "@basecraft/types";
+import { createOptionalSchema } from "../create-optional-schema.core.js";
 import {
   appendRule,
   countDecimalPlaces,
@@ -46,7 +47,7 @@ function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
   const createSchemaWithRule = (rule: NumberRule) =>
     createNumberSchema(appendRule(rules, rule));
 
-  return {
+  const schema: NumberSchema = {
     _brand: "NUMBER",
     isValid: (input: unknown): input is number =>
       typeof input === "number" &&
@@ -61,7 +62,10 @@ function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
     gte: (target) => createSchemaWithRule(greaterThanOrEqualRule(target)),
     lt: (target) => createSchemaWithRule(lessThanRule(target)),
     lte: (target) => createSchemaWithRule(lessThanOrEqualRule(target)),
+    optional: () => createOptionalSchema(schema),
   };
+
+  return schema;
 }
 
 export function number(): NumberSchema {
