@@ -1,5 +1,6 @@
 import { BaseSchema, ObjectSchema, Shape, Brand } from "@basecraft/types";
 import { appendRule, passesAllRules } from "../../util/index.js";
+import { createOptionalSchema } from "../create-optional-schema.core.js";
 
 type ObjectRule = (value: Record<string, unknown>) => boolean;
 
@@ -17,7 +18,7 @@ function createObjectSchema<ObjectType extends object>(
   const createSchemaWithRule = (rule: ObjectRule) =>
     createObjectSchema(shape, appendRule(rules, rule));
 
-  return {
+  const schema: ObjectSchema<ObjectType> = {
     ...shape,
     _brand: "OBJECT" as Brand<ObjectType>,
     isValid: (input: unknown): input is ObjectType => {
@@ -33,7 +34,10 @@ function createObjectSchema<ObjectType extends object>(
       return matchesShape && passesAllRules(record, rules);
     },
     strict: () => createSchemaWithRule(strictRule(keys)),
+    optional: () => createOptionalSchema(schema),
   };
+
+  return schema;
 }
 
 export function object<ObjectType extends object>(
