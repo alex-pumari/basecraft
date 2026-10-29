@@ -7,5 +7,7 @@ export interface NumberSchema extends BaseSchema<number> {
   decimalPlaces(places: number): NumberSchema;
   equal(target: number): NumberSchema;
   gt(target: number): NumberSchema;
+  gte(target: number): NumberSchema;
   lt(target: number): NumberSchema;
+  lte(target: number): NumberSchema;
 }

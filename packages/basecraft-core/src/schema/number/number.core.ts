@@ -30,8 +30,16 @@ function greaterThanRule(target: number): NumberRule {
   return (value) => value > target;
 }
 
+function greaterThanOrEqualRule(target: number): NumberRule {
+  return (value) => value >= target;
+}
+
 function lessThanRule(target: number): NumberRule {
   return (value) => value < target;
+}
+
+function lessThanOrEqualRule(target: number): NumberRule {
+  return (value) => value <= target;
 }
 
 function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
@@ -50,7 +58,9 @@ function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
     decimalPlaces: (places) => createSchemaWithRule(decimalPlacesRule(places)),
     equal: (target) => createSchemaWithRule(equalToRule(target)),
     gt: (target) => createSchemaWithRule(greaterThanRule(target)),
+    gte: (target) => createSchemaWithRule(greaterThanOrEqualRule(target)),
     lt: (target) => createSchemaWithRule(lessThanRule(target)),
+    lte: (target) => createSchemaWithRule(lessThanOrEqualRule(target)),
   };
 }
 

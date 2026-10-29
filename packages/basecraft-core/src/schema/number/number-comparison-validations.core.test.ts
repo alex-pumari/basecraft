@@ -42,6 +42,28 @@ describe("number-comparison-validations", () => {
     });
   });
 
+  describe("greater than or equal", () => {
+    test("should accept values greater than or equal to the target", () => {
+      const validator = number().gte(10).isValid;
+
+      const validValues = [10, 10.1, 11, 20, 100];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject values less than the target", () => {
+      const validator = number().gte(10).isValid;
+
+      const invalidValues = [9.9, 9, 0, -10];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
   describe("less than", () => {
     test("should accept values less than the target", () => {
       const validator = number().lt(10).isValid;
@@ -57,6 +79,28 @@ describe("number-comparison-validations", () => {
       const validator = number().lt(10).isValid;
 
       const invalidValues = [10, 10.1, 11, 100];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("less than or equal", () => {
+    test("should accept values less than or equal to the target", () => {
+      const validator = number().lte(10).isValid;
+
+      const validValues = [-100, -1, 0, 9, 9.9, 10];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject values greater than the target", () => {
+      const validator = number().lte(10).isValid;
+
+      const invalidValues = [10.1, 11, 100];
 
       invalidValues.forEach((value) => {
         expect(validator(value)).toBe(false);
