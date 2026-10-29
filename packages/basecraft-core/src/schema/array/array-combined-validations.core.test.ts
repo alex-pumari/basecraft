@@ -5,7 +5,7 @@ import { array } from "./array.core.js";
 describe("array-combined-validations", () => {
   describe("array with min and max length", () => {
     test("should accept arrays whose length is within the specified bounds", () => {
-      const validator = array().minLength(2).maxLength(4).isValid;
+      const validator = array().min(2).max(4).isValid;
 
       const validValues = [
         [1, 2],
@@ -19,7 +19,7 @@ describe("array-combined-validations", () => {
     });
 
     test("should reject arrays whose length is outside the specified bounds", () => {
-      const validator = array().minLength(2).maxLength(4).isValid;
+      const validator = array().min(2).max(4).isValid;
 
       const invalidValues = [[], [1], [1, 2, 3, 4, 5]];
 
@@ -33,8 +33,8 @@ describe("array-combined-validations", () => {
     test("should accept arrays that satisfy the item schema, minimum length, maximum length, and contains constraints", () => {
       const validator = array(string())
         .contains("target-example")
-        .minLength(2)
-        .maxLength(4).isValid;
+        .min(2)
+        .max(4).isValid;
 
       expect(
         validator(["first-example", "target-example", "third-example"]),
@@ -42,7 +42,7 @@ describe("array-combined-validations", () => {
     });
 
     test("should reject arrays that violate the item schema despite satisfying the length constraints", () => {
-      const validator = array(string()).minLength(2).maxLength(4).isValid;
+      const validator = array(string()).min(2).max(4).isValid;
 
       expect(validator(["first-example", 2])).toBe(false);
     });
@@ -50,8 +50,8 @@ describe("array-combined-validations", () => {
     test("should reject arrays that satisfy the item schema and length constraints but do not contain the required item", () => {
       const validator = array(string())
         .contains("target-example")
-        .minLength(2)
-        .maxLength(4).isValid;
+        .min(2)
+        .max(4).isValid;
 
       expect(validator(["first-example", "second-example"])).toBe(false);
     });

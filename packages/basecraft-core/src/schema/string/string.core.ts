@@ -21,8 +21,8 @@ function createStringSchema(rules: readonly StringRule[] = []): StringSchema {
     isValid: (input: unknown): input is string =>
       typeof input === "string" && passesAllRules(input, rules),
     contains: (substring) => createSchemaWithRule(containsRule(substring)),
-    minLength: (length) => createSchemaWithRule(minLengthRule(length)),
-    maxLength: (length) => createSchemaWithRule(maxLengthRule(length)),
+    min: (length) => createSchemaWithRule(minLengthRule(length)),
+    max: (length) => createSchemaWithRule(maxLengthRule(length)),
   };
 }
 

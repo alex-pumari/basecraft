@@ -28,8 +28,8 @@ function createArraySchema<ItemType>(
         input.every((item) => itemSchema.isValid(item))) &&
       passesAllRules(input, rules),
     contains: (item) => createSchemaWithRule(containsRule(item)),
-    minLength: (length) => createSchemaWithRule(minLengthRule(length)),
-    maxLength: (length) => createSchemaWithRule(maxLengthRule(length)),
+    min: (length) => createSchemaWithRule(minLengthRule(length)),
+    max: (length) => createSchemaWithRule(maxLengthRule(length)),
   };
 }
 
