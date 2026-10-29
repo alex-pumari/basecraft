@@ -1,4 +1,5 @@
 import { BaseSchema } from "./base-schema.type.js";
+import { OptionalSchema } from "./optional-schema.type.js";
 
 export interface NumberSchema extends BaseSchema<number> {
   int(): NumberSchema;
@@ -10,4 +11,5 @@ export interface NumberSchema extends BaseSchema<number> {
   gte(target: number): NumberSchema;
   lt(target: number): NumberSchema;
   lte(target: number): NumberSchema;
+  optional(): OptionalSchema<number>;
 }
