@@ -1,4 +1,5 @@
 import { ArraySchema, InferSchema, BaseSchema } from "@basecraft/types";
+import { createOptionalSchema } from "../create-optional-schema.core.js";
 import {
   appendRule,
   isDeepEqual,
@@ -20,7 +21,7 @@ function createArraySchema<ItemType>(
   const createSchemaWithRule = (rule: ArrayRule) =>
     createArraySchema<ItemType>(itemSchema, appendRule(rules, rule));
 
-  return {
+  const schema: ArraySchema<ItemType> = {
     _brand: "ARRAY",
     isValid: (input: unknown): input is ItemType[] =>
       Array.isArray(input) &&
@@ -30,7 +31,10 @@ function createArraySchema<ItemType>(
     contains: (item) => createSchemaWithRule(containsRule(item)),
     min: (length) => createSchemaWithRule(minLengthRule(length)),
     max: (length) => createSchemaWithRule(maxLengthRule(length)),
+    optional: () => createOptionalSchema(schema),
   };
+
+  return schema;
 }
 
 export function array(): ArraySchema<unknown>;

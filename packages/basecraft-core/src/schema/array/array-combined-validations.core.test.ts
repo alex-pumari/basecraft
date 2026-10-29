@@ -56,4 +56,55 @@ describe("array-combined-validations", () => {
       expect(validator(["first-example", "second-example"])).toBe(false);
     });
   });
+
+  describe("array validations and optional", () => {
+    const validator = array(string()).min(2).max(4).optional().isValid;
+
+    test("should accept an optional value and arrays within the specified bounds", () => {
+      const validValues = [undefined, ["first", "second"], ["a", "b", "c"]];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and arrays outside the specified bounds", () => {
+      const invalidValues = [[], ["first"], ["a", "b", "c", "d", "e"], [1, 2]];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("contains and optional", () => {
+    const validator = array(string())
+      .contains("target-example")
+      .optional().isValid;
+
+    test("should accept an optional value and arrays containing the required item", () => {
+      const validValues = [
+        undefined,
+        ["target-example"],
+        ["first-example", "target-example"],
+      ];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and arrays that do not contain the required item", () => {
+      const invalidValues = [
+        null,
+        [],
+        ["first-example"],
+        [1, "target-example"],
+      ];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
 });
