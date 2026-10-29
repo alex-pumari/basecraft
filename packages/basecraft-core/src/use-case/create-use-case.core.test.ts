@@ -25,7 +25,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -45,7 +45,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -68,7 +68,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -91,7 +91,7 @@ describe("create-use-case", () => {
 
       const useCase = createUseCase({
         requestShape: {},
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -111,7 +111,7 @@ describe("create-use-case", () => {
 
       const useCase = createUseCase({
         requestShape: {},
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -142,7 +142,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -170,7 +170,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -188,6 +188,56 @@ describe("create-use-case", () => {
       expect(handler).toHaveBeenCalledWith(dependencies, request);
     });
 
+    test("should execute the handler when authentication required is omitted and no user is authenticated", async () => {
+      const request = {
+        name: "john",
+      };
+
+      const response = {
+        id: "user-id",
+      };
+
+      const handler = vi.fn().mockResolvedValue(response);
+
+      const useCase = createUseCase({
+        requestShape: {
+          name: string(),
+        },
+        handler,
+      });
+
+      const dependencies = {};
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toEqual(response);
+      expect(handler).toHaveBeenCalledOnce();
+      expect(handler).toHaveBeenCalledWith(dependencies, request);
+    });
+
+    test("should require authentication when authentication required is omitted but allowed roles are configured and no user is authenticated", async () => {
+      const handler = vi.fn();
+
+      const useCase = createUseCase({
+        requestShape: {
+          name: string(),
+        },
+        allowedRoles: ["admin"],
+        handler,
+      });
+
+      const dependencies = {};
+
+      const request = {
+        name: "john",
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toBeInstanceOf(AuthenticationRequiredError);
+      expect(handler).not.toHaveBeenCalled();
+    });
+
     test("should return an authentication required error when authentication is required and no user is authenticated", async () => {
       const handler = vi.fn();
 
@@ -195,7 +245,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: true,
+        authRequired: true,
         handler,
       });
 
@@ -218,7 +268,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         allowedRoles: ["admin"],
         handler,
       });
@@ -242,7 +292,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         allowedRoles: [],
         handler,
       });
@@ -266,7 +316,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: true,
+        authRequired: true,
         allowedRoles: ["admin"],
         handler,
       });
@@ -303,7 +353,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: true,
+        authRequired: true,
         allowedRoles: ["admin", "manager"],
         handler,
       });
@@ -329,7 +379,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: true,
+        authRequired: true,
         allowedRoles: [],
         handler,
       });
@@ -359,7 +409,7 @@ describe("create-use-case", () => {
         requestShape: {
           name: string(),
         },
-        authenticationRequired: false,
+        authRequired: false,
         handler,
       });
 
@@ -391,7 +441,7 @@ describe("create-use-case", () => {
           requestShape: {
             name: string(),
           },
-          authenticationRequired: false,
+          authRequired: false,
           handler,
         });
 

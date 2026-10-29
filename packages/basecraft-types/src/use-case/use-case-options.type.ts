@@ -9,7 +9,7 @@ export interface UseCaseOptions<
   Response,
   CustomError extends DomainError,
 > {
-  authenticationRequired: boolean;
+  authRequired?: boolean | undefined;
 
   allowedRoles?: readonly string[] | undefined;
 

@@ -24,9 +24,8 @@ export function createUseCase<
 ): UseCase<Dependencies, Request, Response, CustomError> {
   const requestValidator = createValidator(options.requestShape);
 
-  const roleAuthorizationRequired = options.allowedRoles !== undefined;
-  const authenticationRequired =
-    options.authenticationRequired || roleAuthorizationRequired;
+  const roleAuthRequired = options.allowedRoles !== undefined;
+  const authRequired = options.authRequired || roleAuthRequired;
 
   return {
     execute: async (
@@ -41,12 +40,12 @@ export function createUseCase<
 
       const { currentUser } = dependencies;
 
-      if (authenticationRequired && !currentUser) {
+      if (authRequired && !currentUser) {
         return new AuthenticationRequiredError();
       }
 
       if (
-        roleAuthorizationRequired &&
+        roleAuthRequired &&
         !options.allowedRoles!.includes(currentUser!.role)
       ) {
         return new AuthorizationError();
