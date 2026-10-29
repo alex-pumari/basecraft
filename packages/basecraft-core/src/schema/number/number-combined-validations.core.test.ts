@@ -23,7 +23,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("greater than and decimal places", () => {
-    const validator = number().decimalPlaces(2).gt(10).isValid;
+    const validator = number().decimal(2).gt(10).isValid;
 
     test("should accept values greater than the target within the decimal places", () => {
       const validValues = [10.1, 10.25, 11, 12.75, 100.99];
@@ -43,7 +43,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("less than and decimal places", () => {
-    const validator = number().decimalPlaces(2).lt(10).isValid;
+    const validator = number().decimal(2).lt(10).isValid;
 
     test("should accept values less than the target within the decimal places", () => {
       const validValues = [-10.5, -1.5, 0.5, 1.75, 9.99, 9];
@@ -103,7 +103,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("negative and decimal places", () => {
-    const validator = number().decimalPlaces(2).negative().isValid;
+    const validator = number().decimal(2).negative().isValid;
 
     test("should accept negative values within the decimal places", () => {
       const validValues = [-0.1, -1, -3.14, -10.25];
@@ -143,7 +143,7 @@ describe("number-combined-validations", () => {
   });
 
   describe("positive and decimal places", () => {
-    const validator = number().decimalPlaces(2).positive().isValid;
+    const validator = number().decimal(2).positive().isValid;
 
     test("should accept positive values within the decimal places", () => {
       const validValues = [0.1, 1, 3.14, 10.25];

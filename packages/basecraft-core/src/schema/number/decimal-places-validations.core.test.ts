@@ -3,7 +3,7 @@ import { number } from "./number.core.js";
 
 describe("decimal-places-validations", () => {
   test("should accept integers regardless of decimal places", () => {
-    const validator = number().decimalPlaces(2).isValid;
+    const validator = number().decimal(2).isValid;
     const validValues = [0, 1, -1, 7, -7, 42, -42, 100];
 
     validValues.forEach((value) => {
@@ -12,7 +12,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should accept decimals within the specified places", () => {
-    const validator = number().decimalPlaces(2).isValid;
+    const validator = number().decimal(2).isValid;
     const validValues = [
       0.1, -0.1, 1.5, -1.5, 3.14, -3.14, 7.12, -7.12, 0.01, -0.01, 99.99,
     ];
@@ -23,7 +23,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should reject decimals exceeding the specified places", () => {
-    const validator = number().decimalPlaces(2).isValid;
+    const validator = number().decimal(2).isValid;
     const invalidValues = [1.234, -1.234, 3.141, -3.141, 0.001, -0.001, 99.999];
 
     invalidValues.forEach((value) => {
@@ -32,7 +32,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should accept integers when places is zero", () => {
-    const validator = number().decimalPlaces(0).isValid;
+    const validator = number().decimal(0).isValid;
     const validValues = [0, 1, -1, 7, -7, 7.0, -7.0, 42, -42, 100];
 
     validValues.forEach((value) => {
@@ -41,7 +41,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should reject non-integer values when places is zero", () => {
-    const validator = number().decimalPlaces(0).isValid;
+    const validator = number().decimal(0).isValid;
     const invalidValues = [0.1, -0.1, 1.5, -1.5, 3.14, -3.14, 0.001, -0.001];
 
     invalidValues.forEach((value) => {
@@ -50,7 +50,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should accept integers when places is a decimal number", () => {
-    const validator = number().decimalPlaces(2.9).isValid;
+    const validator = number().decimal(2.9).isValid;
     const validValues = [0, 1, -1, 7, 7.1, 7.12, -7.12];
 
     validValues.forEach((value) => {
@@ -59,7 +59,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should use only the integer part of decimal places", () => {
-    const validator = number().decimalPlaces(2.9).isValid;
+    const validator = number().decimal(2.9).isValid;
     const validValues = [1.23, -1.23, 7.12, -7.12];
     const invalidValues = [1.234, -1.234, 7.123, -7.123];
 
@@ -73,7 +73,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should treat negative places as zero", () => {
-    const validator = number().decimalPlaces(-2).isValid;
+    const validator = number().decimal(-2).isValid;
     const validValues = [0, 1, -1, 7, -7, 42, -42];
     const invalidValues = [0.1, -0.1, 1.5, -1.5, 3.14, -3.14];
 
@@ -92,7 +92,7 @@ describe("decimal-places-validations", () => {
     const invalidValues = [0.1, -0.1, 1.5, -1.5, 3.14, -3.14];
 
     invalidPlaces.forEach((places) => {
-      const validator = number().decimalPlaces(places).isValid;
+      const validator = number().decimal(places).isValid;
 
       validValues.forEach((value) => {
         expect(validator(value)).toBe(true);
@@ -106,9 +106,9 @@ describe("decimal-places-validations", () => {
 
   test("should reject non-finite values regardless of places", () => {
     const validators = [
-      number().decimalPlaces(0).isValid,
-      number().decimalPlaces(2).isValid,
-      number().decimalPlaces(10).isValid,
+      number().decimal(0).isValid,
+      number().decimal(2).isValid,
+      number().decimal(10).isValid,
     ];
 
     const invalidValues = [NaN, Infinity, -Infinity];
@@ -121,7 +121,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should validate scientific notation according to its mathematical value", () => {
-    const validator = number().decimalPlaces(6).isValid;
+    const validator = number().decimal(6).isValid;
 
     expect(validator(1e-6)).toBe(true);
     expect(validator(-1e-6)).toBe(true);
@@ -134,7 +134,7 @@ describe("decimal-places-validations", () => {
   });
 
   test("should not round values before validation", () => {
-    const validator = number().decimalPlaces(2).isValid;
+    const validator = number().decimal(2).isValid;
 
     expect(validator(1.234)).toBe(false);
     expect(validator(1.235)).toBe(false);
@@ -148,8 +148,8 @@ describe("decimal-places-validations", () => {
     const placesValues = [0, 1, 2, 2.9, -1, -Infinity, Infinity, NaN];
 
     placesValues.forEach((places) => {
-      expect(number().decimalPlaces(places).isValid(0)).toBe(true);
-      expect(number().decimalPlaces(places).isValid(-0)).toBe(true);
+      expect(number().decimal(places).isValid(0)).toBe(true);
+      expect(number().decimal(places).isValid(-0)).toBe(true);
     });
   });
 });
