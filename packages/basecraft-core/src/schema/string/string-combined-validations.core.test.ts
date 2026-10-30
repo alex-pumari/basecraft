@@ -130,6 +130,50 @@ describe("string-combined-validations", () => {
     });
   });
 
+  describe("email combined with other constraints", () => {
+    test("should accept when the email satisfies all constraints", () => {
+      const validator = string().email().min(12).max(30).isValid;
+
+      const validValues = ["test@example.com", "user.name@example.com"];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject when the email violates a length constraint", () => {
+      const validator = string().email().min(20).max(30).isValid;
+
+      const invalidValues = ["a@b.co", "user@example.com"];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
+  describe("email with optional", () => {
+    test("should accept an optional value and valid email addresses", () => {
+      const validator = string().email().optional().isValid;
+
+      const validValues = [undefined, "test@example.com", "a@b.co"];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and invalid email addresses", () => {
+      const validator = string().email().optional().isValid;
+
+      const invalidValues = [null, "", "plainaddress", "user@example"];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
+
   describe("contains, min length, max length and optional", () => {
     const validator = string().contains("abc").min(3).max(8).optional().isValid;
 

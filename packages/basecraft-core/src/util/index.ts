@@ -1,5 +1,6 @@
 export * from "./append-rule.core.js";
 export * from "./count-decimal-places.core.js";
+export * from "./email-rule.core.js";
 export * from "./is-deep-equal.core.js";
 export * from "./equal-to-rule.core.js";
 export * from "./max-length-rule.core.js";

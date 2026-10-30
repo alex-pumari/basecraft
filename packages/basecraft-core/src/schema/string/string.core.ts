@@ -1,6 +1,7 @@
 import { StringSchema } from "@basecraft/types";
 import {
   appendRule,
+  emailRule,
   maxLengthRule,
   minLengthRule,
   passesAllRules,
@@ -22,6 +23,7 @@ function createStringSchema(rules: readonly StringRule[] = []): StringSchema {
     isValid: (input: unknown): input is string =>
       typeof input === "string" && passesAllRules(input, rules),
     contains: (substring) => createSchemaWithRule(containsRule(substring)),
+    email: () => createSchemaWithRule(emailRule),
     min: (length) => createSchemaWithRule(minLengthRule(length)),
     max: (length) => createSchemaWithRule(maxLengthRule(length)),
     optional: () => createOptionalSchema(schema),
