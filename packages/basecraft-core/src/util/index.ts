@@ -3,6 +3,7 @@ export * from "./count-decimal-places.core.js";
 export * from "./email-rule.core.js";
 export * from "./is-deep-equal.core.js";
 export * from "./is-finite-number.core.js";
+export * from "./is-string.core.js";
 export * from "./equal-to-rule.core.js";
 export * from "./max-length-rule.core.js";
 export * from "./min-length-rule.core.js";

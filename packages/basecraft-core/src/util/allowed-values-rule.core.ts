@@ -1,8 +1,5 @@
 import { isFiniteNumber } from "./is-finite-number.core.js";
-
-function isString(value: unknown): value is string {
-  return typeof value === "string";
-}
+import { isString } from "./is-string.core.js";
 
 export function allowedValuesRule(
   values: readonly unknown[],
