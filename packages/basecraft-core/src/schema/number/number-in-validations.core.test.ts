@@ -130,9 +130,10 @@ describe("number-in-validations", () => {
     });
 
     test("should not match elements of a different type", () => {
-      const validator = number().in(
-        ["2", 1] as unknown as [number, ...number[]]
-      ).isValid;
+      const validator = number().in(["2", 1] as unknown as [
+        number,
+        ...number[],
+      ]).isValid;
 
       expect(validator(1)).toBe(true);
       expect(validator(2)).toBe(false);

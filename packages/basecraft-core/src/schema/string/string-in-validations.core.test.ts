@@ -98,9 +98,10 @@ describe("string-in-validations", () => {
     });
 
     test("should reject every value when all elements are invalid", () => {
-      const validator = string().in(
-        [1, null, undefined, {}, []] as unknown as [string, ...string[]]
-      ).isValid;
+      const validator = string().in([1, null, undefined, {}, []] as unknown as [
+        string,
+        ...string[],
+      ]).isValid;
 
       const values = ["", "admin", "1", "null", "undefined"];
 
@@ -110,9 +111,10 @@ describe("string-in-validations", () => {
     });
 
     test("should not match elements of a different type", () => {
-      const validator = string().in(
-        [2, "1"] as unknown as [string, ...string[]]
-      ).isValid;
+      const validator = string().in([2, "1"] as unknown as [
+        string,
+        ...string[],
+      ]).isValid;
 
       expect(validator("1")).toBe(true);
       expect(validator("2")).toBe(false);
