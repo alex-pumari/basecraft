@@ -4,6 +4,7 @@ import {
   emailRule,
   maxLengthRule,
   minLengthRule,
+  allowedValuesRule,
   passesAllRules,
 } from "../../util/index.js";
 import { createOptionalSchema } from "../create-optional-schema.core.js";
@@ -24,6 +25,7 @@ function createStringSchema(rules: readonly StringRule[] = []): StringSchema {
       typeof input === "string" && passesAllRules(input, rules),
     contains: (substring) => createSchemaWithRule(containsRule(substring)),
     email: () => createSchemaWithRule(emailRule),
+    in: (values) => createSchemaWithRule(allowedValuesRule(values)),
     min: (length) => createSchemaWithRule(minLengthRule(length)),
     max: (length) => createSchemaWithRule(maxLengthRule(length)),
     optional: () => createOptionalSchema(schema),

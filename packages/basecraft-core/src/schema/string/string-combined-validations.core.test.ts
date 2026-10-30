@@ -193,4 +193,24 @@ describe("string-combined-validations", () => {
       });
     });
   });
+
+  describe("in and optional", () => {
+    const validator = string().in(["admin", "user"]).optional().isValid;
+
+    test("should accept an optional value and strings included in the list", () => {
+      const validValues = [undefined, "admin", "user"];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and strings not included in the list", () => {
+      const invalidValues = [null, "guest"];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
 });
