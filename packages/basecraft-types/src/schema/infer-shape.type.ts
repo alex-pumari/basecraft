@@ -5,9 +5,7 @@ type OptionalSchemaMarker = {
 };
 
 type OptionalKeys<Shape> = {
-  [Key in keyof Shape]: Shape[Key] extends OptionalSchemaMarker
-    ? Key
-    : never;
+  [Key in keyof Shape]: Shape[Key] extends OptionalSchemaMarker ? Key : never;
 }[keyof Shape];
 
 export type InferShape<Shape> = {
