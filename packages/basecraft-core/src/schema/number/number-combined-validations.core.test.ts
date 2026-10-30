@@ -321,4 +321,24 @@ describe("number-combined-validations", () => {
       });
     });
   });
+
+  describe("in and optional", () => {
+    const validator = number().in([1, 2, 3]).optional().isValid;
+
+    test("should accept an optional value and numbers included in the list", () => {
+      const validValues = [undefined, 1, 2, 3];
+
+      validValues.forEach((value) => {
+        expect(validator(value)).toBe(true);
+      });
+    });
+
+    test("should reject invalid values and numbers not included in the list", () => {
+      const invalidValues = [null, 0, 4, NaN, Infinity];
+
+      invalidValues.forEach((value) => {
+        expect(validator(value)).toBe(false);
+      });
+    });
+  });
 });

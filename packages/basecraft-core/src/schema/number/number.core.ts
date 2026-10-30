@@ -4,7 +4,9 @@ import {
   appendRule,
   countDecimalPlaces,
   equalToRule,
+  isFiniteNumber,
   normalizePlaces,
+  allowedValuesRule,
   passesAllRules,
 } from "../../util/index.js";
 
@@ -50,14 +52,13 @@ function createNumberSchema(rules: readonly NumberRule[] = []): NumberSchema {
   const schema: NumberSchema = {
     _brand: "NUMBER",
     isValid: (input: unknown): input is number =>
-      typeof input === "number" &&
-      Number.isFinite(input) &&
-      passesAllRules(input, rules),
+      isFiniteNumber(input) && passesAllRules(input, rules),
     int: () => createSchemaWithRule(integerRule()),
     positive: () => createSchemaWithRule(positiveRule()),
     negative: () => createSchemaWithRule(negativeRule()),
     decimal: (places) => createSchemaWithRule(decimalPlacesRule(places)),
     equal: (target) => createSchemaWithRule(equalToRule(target)),
+    in: (values) => createSchemaWithRule(allowedValuesRule(values)),
     gt: (target) => createSchemaWithRule(greaterThanRule(target)),
     gte: (target) => createSchemaWithRule(greaterThanOrEqualRule(target)),
     lt: (target) => createSchemaWithRule(lessThanRule(target)),
