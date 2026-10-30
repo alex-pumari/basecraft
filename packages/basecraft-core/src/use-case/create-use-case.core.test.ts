@@ -1,12 +1,27 @@
-import { describe, expect, test, vi } from "vitest";
+import { UseCaseDependencies } from "@basecraft/types";
 import {
   AuthenticationRequiredError,
   AuthorizationError,
   InvalidRequestError,
   UnexpectedError,
 } from "@basecraft/errors";
+import { describe, expect, test, vi } from "vitest";
 import { createUseCase } from "./create-use-case.core.js";
 import { string } from "../schema/string/string.core.js";
+
+type Request = {
+  name: string;
+};
+
+type Handler = (
+  dependencies: UseCaseDependencies,
+  request: Request,
+) => Promise<unknown>;
+
+type EmptyRequestHandler = (
+  dependencies: UseCaseDependencies,
+  request: {},
+) => Promise<unknown>;
 
 describe("create-use-case", () => {
   describe("use case execution", () => {
@@ -19,7 +34,7 @@ describe("create-use-case", () => {
         id: "user-id",
       };
 
-      const handler = vi.fn().mockResolvedValue(response);
+      const handler = vi.fn<Handler>().mockResolvedValue(response);
 
       const useCase = createUseCase({
         requestShape: {
@@ -39,7 +54,7 @@ describe("create-use-case", () => {
     });
 
     test("should return an invalid request error when the request does not match the expected shape", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -53,7 +68,7 @@ describe("create-use-case", () => {
 
       const request = {
         name: 123,
-      };
+      } as unknown as Request;
 
       const result = await useCase.execute(dependencies, request);
 
@@ -62,7 +77,7 @@ describe("create-use-case", () => {
     });
 
     test("should return an invalid request error when a required property is missing", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -74,7 +89,7 @@ describe("create-use-case", () => {
 
       const dependencies = {};
 
-      const request = {};
+      const request = {} as Request;
 
       const result = await useCase.execute(dependencies, request);
 
@@ -87,7 +102,7 @@ describe("create-use-case", () => {
         success: true,
       };
 
-      const handler = vi.fn().mockResolvedValue(response);
+      const handler = vi.fn<EmptyRequestHandler>().mockResolvedValue(response);
 
       const useCase = createUseCase({
         requestShape: {},
@@ -107,7 +122,7 @@ describe("create-use-case", () => {
     });
 
     test("should return an invalid request error when the request contains extra properties and the request shape is empty", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<EmptyRequestHandler>();
 
       const useCase = createUseCase({
         requestShape: {},
@@ -136,7 +151,7 @@ describe("create-use-case", () => {
         id: "user-id",
       };
 
-      const handler = vi.fn().mockResolvedValue(response);
+      const handler = vi.fn<Handler>().mockResolvedValue(response);
 
       const useCase = createUseCase({
         requestShape: {
@@ -164,7 +179,7 @@ describe("create-use-case", () => {
         id: "user-id",
       };
 
-      const handler = vi.fn().mockResolvedValue(response);
+      const handler = vi.fn<Handler>().mockResolvedValue(response);
 
       const useCase = createUseCase({
         requestShape: {
@@ -197,7 +212,7 @@ describe("create-use-case", () => {
         id: "user-id",
       };
 
-      const handler = vi.fn().mockResolvedValue(response);
+      const handler = vi.fn<Handler>().mockResolvedValue(response);
 
       const useCase = createUseCase({
         requestShape: {
@@ -216,7 +231,7 @@ describe("create-use-case", () => {
     });
 
     test("should require authentication when authentication required is omitted but allowed roles are configured and no user is authenticated", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -239,7 +254,7 @@ describe("create-use-case", () => {
     });
 
     test("should return an authentication required error when authentication is required and no user is authenticated", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -262,7 +277,7 @@ describe("create-use-case", () => {
     });
 
     test("should require authentication when allowed roles are configured and no user is authenticated", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -286,7 +301,7 @@ describe("create-use-case", () => {
     });
 
     test("should require authentication when no roles are allowed and no user is authenticated", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -310,7 +325,7 @@ describe("create-use-case", () => {
     });
 
     test("should return an authorization error when the authenticated user does not have an allowed role", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -347,7 +362,7 @@ describe("create-use-case", () => {
         id: "user-id",
       };
 
-      const handler = vi.fn().mockResolvedValue(response);
+      const handler = vi.fn<Handler>().mockResolvedValue(response);
 
       const useCase = createUseCase({
         requestShape: {
@@ -373,7 +388,7 @@ describe("create-use-case", () => {
     });
 
     test("should return an authorization error when no roles are allowed", async () => {
-      const handler = vi.fn();
+      const handler = vi.fn<Handler>();
 
       const useCase = createUseCase({
         requestShape: {
@@ -403,7 +418,7 @@ describe("create-use-case", () => {
 
     test("should return the domain error when the handler throws a domain error", async () => {
       const domainError = new AuthorizationError();
-      const handler = vi.fn().mockRejectedValue(domainError);
+      const handler = vi.fn<Handler>().mockRejectedValue(domainError);
 
       const useCase = createUseCase({
         requestShape: {
@@ -435,7 +450,7 @@ describe("create-use-case", () => {
       ];
 
       for (const value of unexpectedValues) {
-        const handler = vi.fn().mockRejectedValue(value);
+        const handler = vi.fn<Handler>().mockRejectedValue(value);
 
         const useCase = createUseCase({
           requestShape: {
