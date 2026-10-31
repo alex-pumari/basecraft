@@ -12,6 +12,7 @@ import {
   InvalidRequestError,
   UnexpectedError,
 } from "@basecraft/errors";
+import { userHasRole } from "./user-has-role.core.js";
 import { createValidator } from "./create-validator.core.js";
 
 export function createUseCase<
@@ -40,15 +41,21 @@ export function createUseCase<
 
       const { currentUser } = dependencies;
 
-      if (authRequired && !currentUser) {
-        return new AuthenticationRequiredError();
-      }
+      if (!currentUser) {
+        if (authRequired) {
+          return new AuthenticationRequiredError();
+        }
+      } else if (roleAuthRequired) {
+        const allowedRoles = options.allowedRoles as readonly (
+          string | number
+        )[];
 
-      if (
-        roleAuthRequired &&
-        !options.allowedRoles!.includes(currentUser!.role)
-      ) {
-        return new AuthorizationError();
+        if (
+          !userHasRole(currentUser) ||
+          !allowedRoles.includes(currentUser.role)
+        ) {
+          return new AuthorizationError();
+        }
       }
 
       try {

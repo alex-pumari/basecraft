@@ -23,6 +23,18 @@ type EmptyRequestHandler = (
   request: {},
 ) => Promise<unknown>;
 
+type NumericRole = 1 | 2;
+
+type NumericRoleDependencies = UseCaseDependencies<{
+  id: string;
+  role: NumericRole;
+}>;
+
+type NumericRoleHandler = (
+  dependencies: NumericRoleDependencies,
+  request: Request,
+) => Promise<unknown>;
+
 describe("create-use-case", () => {
   describe("use case execution", () => {
     test("should return the response when the request is valid and the handler succeeds", async () => {
@@ -403,6 +415,226 @@ describe("create-use-case", () => {
         currentUser: {
           id: "user-id",
           role: "admin",
+        },
+      };
+
+      const request = {
+        name: "john",
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toBeInstanceOf(AuthorizationError);
+      expect(handler).not.toHaveBeenCalled();
+    });
+
+    test("should return an authorization error when the authenticated user has no role and roles are allowed", async () => {
+      const handler = vi.fn<Handler>();
+
+      const useCase = createUseCase({
+        requestShape: {
+          name: string(),
+        },
+        authRequired: true,
+        allowedRoles: ["admin"],
+        handler,
+      });
+
+      const dependencies = {
+        currentUser: {
+          id: "user-id",
+        },
+      };
+
+      const request = {
+        name: "john",
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toBeInstanceOf(AuthorizationError);
+      expect(handler).not.toHaveBeenCalled();
+    });
+
+    test("should return an authorization error when the authenticated user has no role and no roles are allowed", async () => {
+      const handler = vi.fn<Handler>();
+
+      const useCase = createUseCase({
+        requestShape: {
+          name: string(),
+        },
+        authRequired: true,
+        allowedRoles: [],
+        handler,
+      });
+
+      const dependencies = {
+        currentUser: {
+          id: "user-id",
+        },
+      };
+
+      const request = {
+        name: "john",
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toBeInstanceOf(AuthorizationError);
+      expect(handler).not.toHaveBeenCalled();
+    });
+
+    test("should execute the handler when the authenticated user has an allowed numeric role", async () => {
+      const request = {
+        name: "john",
+      };
+
+      const response = {
+        id: "user-id",
+      };
+
+      const handler = vi.fn<NumericRoleHandler>().mockResolvedValue(response);
+
+      const useCase = createUseCase<NumericRoleDependencies, Request, unknown>({
+        requestShape: {
+          name: string(),
+        },
+        authRequired: true,
+        allowedRoles: [1],
+        handler,
+      });
+
+      const dependencies: NumericRoleDependencies = {
+        currentUser: {
+          id: "user-id",
+          role: 1,
+        },
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toEqual(response);
+      expect(handler).toHaveBeenCalledOnce();
+      expect(handler).toHaveBeenCalledWith(dependencies, request);
+    });
+
+    test("should accept NaN, Infinity and -Infinity as valid numeric roles", async () => {
+      const roles = [NaN, Infinity, -Infinity];
+
+      for (const role of roles) {
+        const request = {
+          name: "john",
+        };
+
+        const response = {
+          id: "user-id",
+        };
+
+        const handler = vi.fn<Handler>().mockResolvedValue(response);
+
+        const useCase = createUseCase({
+          requestShape: {
+            name: string(),
+          },
+          authRequired: true,
+          allowedRoles: [role],
+          handler,
+        });
+
+        const dependencies = {
+          currentUser: {
+            id: "user-id",
+            role,
+          },
+        };
+
+        const result = await useCase.execute(dependencies, request);
+
+        expect(result).toEqual(response);
+        expect(handler).toHaveBeenCalledOnce();
+        expect(handler).toHaveBeenCalledWith(dependencies, request);
+      }
+    });
+
+    test("should execute the handler when allowed roles contain duplicate roles", async () => {
+      const request = {
+        name: "john",
+      };
+
+      const response = {
+        id: "user-id",
+      };
+
+      const handler = vi.fn<Handler>().mockResolvedValue(response);
+
+      const useCase = createUseCase({
+        requestShape: {
+          name: string(),
+        },
+        authRequired: true,
+        allowedRoles: ["admin", "admin"],
+        handler,
+      });
+
+      const dependencies = {
+        currentUser: {
+          id: "user-id",
+          role: "admin",
+        },
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toEqual(response);
+      expect(handler).toHaveBeenCalledOnce();
+      expect(handler).toHaveBeenCalledWith(dependencies, request);
+    });
+
+    test("should return an authorization error when the authenticated user has a numeric role that is not allowed", async () => {
+      const handler = vi.fn<NumericRoleHandler>();
+
+      const useCase = createUseCase<NumericRoleDependencies, Request, unknown>({
+        requestShape: {
+          name: string(),
+        },
+        authRequired: true,
+        allowedRoles: [1],
+        handler,
+      });
+
+      const dependencies: NumericRoleDependencies = {
+        currentUser: {
+          id: "user-id",
+          role: 2,
+        },
+      };
+
+      const request = {
+        name: "john",
+      };
+
+      const result = await useCase.execute(dependencies, request);
+
+      expect(result).toBeInstanceOf(AuthorizationError);
+      expect(handler).not.toHaveBeenCalled();
+    });
+
+    test("should return an authorization error when the authenticated user role is neither a string nor a number", async () => {
+      const handler = vi.fn<Handler>();
+
+      const useCase = createUseCase({
+        requestShape: {
+          name: string(),
+        },
+        authRequired: true,
+        allowedRoles: [1],
+        handler,
+      });
+
+      const dependencies = {
+        currentUser: {
+          id: "user-id",
+          role: true,
         },
       };
 
