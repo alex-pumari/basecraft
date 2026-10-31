@@ -1,1 +1,1 @@
-export * from "./calendar-service.type.js";
+export * from "./date-service.type.js";
