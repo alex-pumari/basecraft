@@ -6,7 +6,7 @@ import {
   UnexpectedError,
 } from "@basecraft/errors";
 
-export type UseCaseError<CustomError extends DomainError> =
+export type UseCaseError<CustomError extends DomainError = never> =
   | CustomError
   | InvalidRequestError
   | AuthenticationRequiredError

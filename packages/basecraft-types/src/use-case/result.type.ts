@@ -1,8 +1,9 @@
 import { DomainError } from "@basecraft/errors";
 
-export type Result<Value, CustomError extends DomainError> =
+export type Result<Value, CustomError extends DomainError = never> =
   Value | CustomError;
 
-export type AsyncResult<Value, CustomError extends DomainError> = Promise<
-  Result<Value, CustomError>
->;
+export type AsyncResult<
+  Value,
+  CustomError extends DomainError = never,
+> = Promise<Result<Value, CustomError>>;

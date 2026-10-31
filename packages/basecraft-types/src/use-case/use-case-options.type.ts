@@ -7,7 +7,7 @@ export interface UseCaseOptions<
   Dependencies extends UseCaseDependencies,
   Request extends object,
   Response,
-  CustomError extends DomainError,
+  CustomError extends DomainError = never,
 > {
   authRequired?: boolean | undefined;
 

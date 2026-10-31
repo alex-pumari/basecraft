@@ -18,7 +18,7 @@ export function createUseCase<
   Dependencies extends UseCaseDependencies,
   Request extends object,
   Response,
-  CustomError extends DomainError,
+  CustomError extends DomainError = never,
 >(
   options: UseCaseOptions<Dependencies, Request, Response, CustomError>,
 ): UseCase<Dependencies, Request, Response, CustomError> {

@@ -7,7 +7,7 @@ export interface UseCase<
   Dependencies extends UseCaseDependencies,
   Request extends object,
   Response,
-  CustomError extends DomainError,
+  CustomError extends DomainError = never,
 > {
   execute(
     dependencies: Dependencies,
