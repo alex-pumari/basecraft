@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
@@ -20,7 +21,13 @@ jobs:
           node-version: "22.x"
           cache: "npm"
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
+
       # - run: npm run check:code --workspace=@basecraft/core TODO: typescript-eslint + typescript
-      - run: npm run check:types --workspace=@basecraft/core
-      - run: npm run test --workspace=@basecraft/core
+
+      - name: Check types
+        run: npm run check:types --workspace=@basecraft/core
+
+      - name: Run tests
+        run: npm run test --workspace=@basecraft/core
