@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "packages/basecraft/**"
+      - "!packages/basecraft-core/**/*.md"
 
 jobs:
   deployment:

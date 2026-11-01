@@ -8,7 +8,7 @@
 
 ---
 
-`@basecraft/errors` ofrece una base común para modelar errores de dominio en aplicaciones TypeScript. Todos los errores heredan de `DomainError`, incluyen un `code` tipado y establecen automáticamente su `name`.
+`@basecraft/errors` ofrece una base común para construir errores de dominio en aplicaciones TypeScript. Todos los errores heredan de `DomainError`, incluyen un `code` tipado y establecen automáticamente su `name`.
 
 ## Instalación
 

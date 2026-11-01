@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "packages/basecraft-errors/**"
+      - "!packages/basecraft-errors/**/*.md"
 
 jobs:
   quality:
