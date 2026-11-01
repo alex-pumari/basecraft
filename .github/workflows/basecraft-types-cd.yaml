@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: "22.x"
           cache: "npm"
+          registry-url: "https://registry.npmjs.org"
 
       - run: npm ci
       # - run: npm run check:code --workspace=@basecraft/types TODO: typescript-eslint + typescript
