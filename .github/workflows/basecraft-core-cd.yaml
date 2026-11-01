@@ -23,6 +23,9 @@ jobs:
       - run: npm ci
       # - run: npm run check:code --workspace=@basecraft/errors TODO: typescript-eslint + typescript
 
+      - name: Build dependencies
+        run: npm run build --workspace=packages/basecraft-errors && npm run build --workspace=packages/basecraft-types
+
       - name: Build package
         run: npm run build --workspace=@basecraft/core
 
