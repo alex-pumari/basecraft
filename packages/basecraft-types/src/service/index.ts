@@ -1,3 +1,4 @@
+export * from "./crypto-service.type.js";
 export * from "./instant-service.type.js";
 export * from "./date-service.type.js";
 export * from "./time-service.type.js";
