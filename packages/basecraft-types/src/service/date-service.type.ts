@@ -1,29 +1,34 @@
-import { DateFormat } from "../util/date-format.type.js";
-import { DateUnit } from "../util/date-unit.type.js";
+import { Locale } from "./locale.type.js";
+import { TimeZone } from "./time-zone.type.js";
 
-export interface DateService<CustomDate> {
-  now(): CustomDate;
+export type DateUnit = "day" | "week" | "month" | "year";
 
-  add(date: CustomDate, amount: number, unit: DateUnit): CustomDate;
-  subtract(date: CustomDate, amount: number, unit: DateUnit): CustomDate;
+export type DateFormatOptions = {
+  locale?: Locale;
+  year?: "numeric" | "2-digit";
+  month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
+  day?: "numeric" | "2-digit";
+  weekday?: "long" | "short" | "narrow";
+};
 
-  equal(
-    firstDate: CustomDate,
-    secondDate: CustomDate,
-    unit?: DateUnit,
-  ): boolean;
-  gt(firstDate: CustomDate, secondDate: CustomDate, unit?: DateUnit): boolean;
-  lt(firstDate: CustomDate, secondDate: CustomDate, unit?: DateUnit): boolean;
-  gte(firstDate: CustomDate, secondDate: CustomDate, unit?: DateUnit): boolean;
-  lte(firstDate: CustomDate, secondDate: CustomDate, unit?: DateUnit): boolean;
-  between(
-    date: CustomDate,
-    startDate: CustomDate,
-    endDate: CustomDate,
-    unit?: DateUnit,
-  ): boolean;
+export interface DateService<Date> {
+  now(timeZone?: TimeZone): Date;
 
-  diff(firstDate: CustomDate, secondDate: CustomDate, unit: DateUnit): number;
+  add(date: Date, amount: number, unit: DateUnit): Date;
 
-  format(date: CustomDate, format: DateFormat): string;
+  subtract(date: Date, amount: number, unit: DateUnit): Date;
+
+  diff(firstDate: Date, secondDate: Date, unit: DateUnit): number;
+
+  equal(firstDate: Date, secondDate: Date): boolean;
+
+  gt(firstDate: Date, secondDate: Date): boolean;
+
+  lt(firstDate: Date, secondDate: Date): boolean;
+
+  gte(firstDate: Date, secondDate: Date): boolean;
+
+  lte(firstDate: Date, secondDate: Date): boolean;
+
+  format(date: Date, options: DateFormatOptions): string;
 }
