@@ -1,4 +1,4 @@
-export type RequireAtLeastOne<ObjectType extends object> = {
-  [Key in keyof ObjectType]-?: Required<Pick<ObjectType, Key>> &
-    Partial<Omit<ObjectType, Key>>;
-}[keyof ObjectType];
+export type RequireAtLeastOne<Object extends object> = {
+  [Key in keyof Object]-?: Required<Pick<Object, Key>> &
+    Partial<Omit<Object, Key>>;
+}[keyof Object];
