@@ -5,6 +5,7 @@ export * from "./is-deep-equal.core.js";
 export * from "./is-finite-number.core.js";
 export * from "./is-number.core.js";
 export * from "./is-string.core.js";
+export * from "./has-at-least-one-value.core.js";
 export * from "./equal-to-rule.core.js";
 export * from "./max-length-rule.core.js";
 export * from "./min-length-rule.core.js";
