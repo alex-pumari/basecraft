@@ -1,6 +1,8 @@
 import { BooleanSchema } from "@basecraft/types";
-import { appendRule, equalToRule, passesAllRules } from "../../util/index.js";
 import { createOptionalSchema } from "../create-optional-schema.core.js";
+import { appendRule } from "../../util/append-rule.core.js";
+import { passesAllRules } from "../../util/passes-all-rules.core.js";
+import { equalToRule } from "../../util/equal-to-rule.core.js";
 
 type BooleanRule = (value: boolean) => boolean;
 

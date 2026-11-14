@@ -1,14 +1,12 @@
 import { NumberSchema } from "@basecraft/types";
 import { createOptionalSchema } from "../create-optional-schema.core.js";
-import {
-  appendRule,
-  countDecimalPlaces,
-  equalToRule,
-  isFiniteNumber,
-  normalizePlaces,
-  allowedValuesRule,
-  passesAllRules,
-} from "../../util/index.js";
+import { normalizePlaces } from "../../util/normalize-places.core.js";
+import { countDecimalPlaces } from "../../util/count-decimal-places.core.js";
+import { appendRule } from "../../util/append-rule.core.js";
+import { passesAllRules } from "../../util/passes-all-rules.core.js";
+import { isFiniteNumber } from "../../util/is-finite-number.core.js";
+import { allowedValuesRule } from "../../util/allowed-values-rule.core.js";
+import { equalToRule } from "../../util/equal-to-rule.core.js";
 
 type NumberRule = (value: number) => boolean;
 

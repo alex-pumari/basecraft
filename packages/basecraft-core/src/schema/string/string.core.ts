@@ -1,14 +1,12 @@
 import { StringSchema } from "@basecraft/types";
-import {
-  appendRule,
-  emailRule,
-  maxLengthRule,
-  minLengthRule,
-  allowedValuesRule,
-  isString,
-  passesAllRules,
-} from "../../util/index.js";
 import { createOptionalSchema } from "../create-optional-schema.core.js";
+import { appendRule } from "../../util/append-rule.core.js";
+import { passesAllRules } from "../../util/passes-all-rules.core.js";
+import { isString } from "../../util/is-string.core.js";
+import { emailRule } from "../../util/email-rule.core.js";
+import { allowedValuesRule } from "../../util/allowed-values-rule.core.js";
+import { maxLengthRule } from "../../util/max-length-rule.core.js";
+import { minLengthRule } from "../../util/min-length-rule.core.js";
 
 type StringRule = (value: string) => boolean;
 

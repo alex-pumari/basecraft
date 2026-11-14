@@ -1,12 +1,10 @@
 import { ArraySchema, InferSchema, BaseSchema } from "@basecraft/types";
 import { createOptionalSchema } from "../create-optional-schema.core.js";
-import {
-  appendRule,
-  isDeepEqual,
-  maxLengthRule,
-  minLengthRule,
-  passesAllRules,
-} from "../../util/index.js";
+import { isDeepEqual } from "../../util/is-deep-equal.core.js";
+import { appendRule } from "../../util/append-rule.core.js";
+import { passesAllRules } from "../../util/passes-all-rules.core.js";
+import { minLengthRule } from "../../util/min-length-rule.core.js";
+import { maxLengthRule } from "../../util/max-length-rule.core.js";
 
 type ArrayRule = (value: unknown[]) => boolean;
 

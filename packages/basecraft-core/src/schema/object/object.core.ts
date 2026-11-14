@@ -1,6 +1,7 @@
 import { BaseSchema, ObjectSchema, Shape, Brand } from "@basecraft/types";
-import { appendRule, passesAllRules } from "../../util/index.js";
 import { createOptionalSchema } from "../create-optional-schema.core.js";
+import { passesAllRules } from "../../util/passes-all-rules.core.js";
+import { appendRule } from "../../util/append-rule.core.js";
 
 type ObjectRule = (value: Record<string, unknown>) => boolean;
 
